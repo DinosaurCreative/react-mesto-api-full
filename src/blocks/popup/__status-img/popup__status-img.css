@@ -1,0 +1,6 @@
+.popup__status-img {
+  background-image: url(../../../images/Accept.svg);
+  width: 120px;
+  height: 120px;
+  margin: 26px auto 32px;
+}

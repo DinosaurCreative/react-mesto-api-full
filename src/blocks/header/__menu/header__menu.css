@@ -1,0 +1,15 @@
+.header__menu {
+  display: none;
+  height: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .header__menu {
+    content: '';
+    border-bottom: 1px rgba(54, 54, 54, .7) solid;
+    display: flex;
+    height: 142px;
+    flex-direction: column;
+    align-items: center;
+  }
+}

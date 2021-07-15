@@ -5,7 +5,7 @@
   flex-direction: column;
 }
 
-.header:after {
+.header::after {
   content: '';
   border-bottom: 1px rgba(54, 54, 54, .7) solid;
 }

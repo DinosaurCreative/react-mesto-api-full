@@ -3,7 +3,7 @@
   width: 142px;
   height: 33px;
   transition: opacity .3s linear;
-  margin: 45px auto 41px 0;
+  margin: 0 auto 41px 0;
   background-position: left;
   background-size: contain;
   background-repeat: no-repeat;
@@ -17,6 +17,6 @@
   .header__logo {
     width: 103.74px;
     height: 24.4px;
-    margin: 28px auto 31.6px 27px;
+    /* margin: 28px auto 31.6px 27px; */
   }
 }

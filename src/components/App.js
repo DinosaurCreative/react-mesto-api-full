@@ -7,8 +7,14 @@ import ImagePopup from './ImagePopup';
 import AddPlacePopup from './AddPlacePopup';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import Login from './Login';
+import Register from './Register';
 import api from '../utils/api';
 import { CurrentUserContext }  from '../contexts/CurrentUserContext';
+import { Route } from 'react-router-dom';
+import PopupWithForm from './PopupWithForm';
+import InfoTooltip from './InfoTooltip';
+
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -17,6 +23,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({isOpen: false});
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', _id: '', avatar: ''});
   const [cards, setCards] = React.useState([]);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
 
   React.useEffect(()=> {
     api.getProfileData()
@@ -29,6 +36,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard({ isOpen: false });
+    setIsInfoTooltipPopupOpen(false);
   };
  
   function handleUpdateUser(userInfo) {
@@ -102,6 +110,19 @@ function App() {
       <div className="page__container">
         <CurrentUserContext.Provider value = {currentUser}>
           <Header />
+          {/* <Route path="/sign-up">
+          <Register />
+          </Route> */}
+          {/* <Route path="/sign-in"> */}
+            <Login />
+
+            {/* <Register /> */}
+          {/* </Route> */}
+
+          <InfoTooltip  title={'Что-то пошло не так! Попробуйте еще раз.'}
+                        isOpen={isInfoTooltipPopupOpen}  
+                        onClose={closeAllPopups}  
+                              />
           <Main onEditProfile = {handleEditProfileClick}
                 onAddPlace = {handleAddPlaceClick}
                 onEditAvatar = {handleEditAvatarClick}
@@ -112,6 +133,7 @@ function App() {
 
                 />     
           <Footer />
+          <PopupWithForm />
           <AddPlacePopup isOpen = {isAddPlacePopupOpen}
                          onClose = {closeAllPopups}
                          onUpdateCards = {handleAddPlaceSubmit}

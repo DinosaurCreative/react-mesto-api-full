@@ -1,0 +1,27 @@
+.register__input {
+  border: 0;
+  background-color: black;
+  border-bottom: 2px solid rgba(204, 204, 204, 1);
+  padding: 0 0 7px;
+  color: rgba(255, 255, 255, 1);
+  font-size: 14px;
+  line-height: 16.94px;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.register__input:first-child {
+  margin-bottom: 30px;
+}
+
+.register__input::placeholder {
+  color: rgba(204, 204, 204, 1);
+  font-size: 14px;
+  line-height: 16.94px;
+  font-style: normal;
+  font-weight: 400;
+}
+
+.register__input:focus {
+  outline: none;  
+}

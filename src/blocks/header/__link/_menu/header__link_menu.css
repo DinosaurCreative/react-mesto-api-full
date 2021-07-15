@@ -1,0 +1,10 @@
+.header__link_menu {
+  margin: 18px auto 40px;
+  text-decoration: none;
+  color: #A9A9A9;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+}

@@ -1,0 +1,20 @@
+.register__autorization-link {
+  color: rgba(255, 255, 255, 1);
+  text-decoration: none;
+  margin-top: 15px;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 17px;
+  transition: color .15s linear;
+}
+
+.register__autorization-link:hover {
+  color: rgba(255, 255, 255, .6);
+}
+
+@media screen and (max-width: 767px) {
+  .register__autorization-link {
+    margin-top: 20px;
+  }
+}

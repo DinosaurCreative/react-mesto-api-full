@@ -1,0 +1,21 @@
+.header__menu-btn {
+  background-image: url(../../../images/Menu-btn.svg);
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: transparent;
+  width: 24px;
+  height: 24px;
+  transition: opacity .2s linear;
+  display: none;
+  padding: 0;
+  margin-top: 6px;
+}
+.header__menu-btn:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 767px) {
+  .header__menu-btn {
+    display: flex;
+  }
+}
