@@ -17,7 +17,7 @@ function Header() {
           <Link className="header__link_menu">{"Выйти"}</Link>
          </div>
         <button className={`${ !isMenuOpen ? "header__menu-btn" : "header__menu-btn_type_close"}`} onClick={menuVisibilityToggle}/> */}
-      <Link className="header__link">{"Зарегистрироваться"}</Link>
+      <Link className="header__link">{"Регистрация"}</Link>
       </div>
     </header>
   );
