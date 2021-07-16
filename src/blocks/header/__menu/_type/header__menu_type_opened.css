@@ -1,0 +1,5 @@
+@media screen and (max-width: 767px) {
+  .header__menu_type_opened {
+    opacity: 1;
+  }
+} 

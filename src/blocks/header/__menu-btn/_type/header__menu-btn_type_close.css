@@ -1,15 +1,15 @@
 .header__menu-btn_type_close {
-  background-image: url(../../../../images/Cross.svg);
-  transform: rotate(45deg) scaleX(-1);
+  background-image: url(../../../../images/Close\ Icon.svg);
   background-repeat: no-repeat;
   background-color: transparent;
-  background-size: contain;
   border: transparent;
   width: 24px;
   height: 24px;
-  transition: opacity .2s linear;
   display: none;
   padding: 0;
+  transition: opacity .2s linear;
+  background-size: contain;
+  transition: background-image .1s linear;
 }
 .header__menu-btn_type_close:hover {
   opacity: .6;
@@ -18,5 +18,7 @@
 @media screen and (max-width: 767px) {
   .header__menu-btn_type_close {
     display: flex;
+    align-self: flex-end;
+    margin-bottom: 31px;
   }
 }

@@ -1,0 +1,9 @@
+@media screen and (max-width: 767px) {
+  .header__top-line {
+    border-bottom: 1px rgba(54, 54, 54, .7) solid;
+    left: 0;
+    right: 0;
+    bottom: 83px;
+    position: absolute;
+  }
+}

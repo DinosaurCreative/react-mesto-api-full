@@ -114,15 +114,15 @@ function App() {
           <Register />
           </Route> */}
           {/* <Route path="/sign-in"> */}
-            <Login />
+            {/* <Login /> */}
 
             {/* <Register /> */}
           {/* </Route> */}
 
-          <InfoTooltip  title={'Что-то пошло не так! Попробуйте еще раз.'}
+          {/* <InfoTooltip  title={'Что-то пошло не так! Попробуйте еще раз.'}
                         isOpen={isInfoTooltipPopupOpen}  
                         onClose={closeAllPopups}  
-                              />
+                              /> */}
           <Main onEditProfile = {handleEditProfileClick}
                 onAddPlace = {handleAddPlaceClick}
                 onEditAvatar = {handleEditAvatarClick}

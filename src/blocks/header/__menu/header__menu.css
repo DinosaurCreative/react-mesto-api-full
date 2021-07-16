@@ -1,15 +1,19 @@
 .header__menu {
-  display: none;
-  height: 0;
+  display: flex;
+  height: 119px;
+  opacity: 1;
 }
 
 @media screen and (max-width: 767px) {
   .header__menu {
-    content: '';
-    border-bottom: 1px rgba(54, 54, 54, .7) solid;
     display: flex;
-    height: 142px;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    transition: opacity .15s linear;
+    opacity: 0;
+    left: 0;
+    right: 0;
+    top: 40px;
   }
-}
+} 

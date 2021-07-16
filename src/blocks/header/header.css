@@ -3,6 +3,7 @@
   padding: 0 200px;
   margin: 0;
   flex-direction: column;
+  position: relative;
 }
 
 .header::after {

@@ -1,0 +1,5 @@
+@media screen and (max-width: 767px) {
+  .header__container_menu {
+    height: 212px;
+  }
+}

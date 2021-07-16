@@ -1,13 +1,14 @@
 .header__link {
-  margin: 6px 0 0;
+  /* margin: 6px 0 0; */
   text-decoration: none;
   color: rgba(255, 255, 255, 1);
   font-weight: 400;
   font-style: normal;
   font-size: 18px;
   line-height: 22px;
-  transition: color .3s linear;
-  display: none;
+  transition: color .15s linear;
+  display: flex;
+  align-self: center;
 }
 
 .header__link:hover {

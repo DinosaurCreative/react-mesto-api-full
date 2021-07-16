@@ -1,11 +1,11 @@
-.header__link_exit {
-  opacity: .6;
-  display: flex;
-} 
+/* .header__link_exit {
+  opacity: .6;  */
+  /* display: flex; */
+ 
+/* }  */
 
-
-@media screen and (max-width: 767px) {
+/* @media screen and (max-width: 767px) {
   .header__link {
     display: none;
   }
-}
+} */

@@ -8,7 +8,7 @@
   background-repeat: no-repeat;
   background-position: center;
   outline: none;
-  transition: opacity .2s linear;
+  transition: opacity .15s linear;
 }
 
 .profile__edit-button:hover {
