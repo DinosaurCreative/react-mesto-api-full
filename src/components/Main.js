@@ -21,7 +21,6 @@ function Main (props) {
           <button className="profile__edit-button" aria-label="Редактировать профиль" type="button" onClick={props.onEditProfile}/>
         </div>
         <button className="profile__add-button" aria-label="Кнопка добавления фото" type="button" onClick={props.onAddPlace}/>
-
       </section>
       <section className="grid">
       <span className={ props.cards.length > 0  ? '': "grid__loader"}/>

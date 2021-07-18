@@ -11,9 +11,10 @@ import Login from './Login';
 import Register from './Register';
 import api from '../utils/api';
 import { CurrentUserContext }  from '../contexts/CurrentUserContext';
-import { Route, Switch} from 'react-router-dom';
+import { Route, Switch, Redirect} from 'react-router-dom';
 import PopupWithForm from './PopupWithForm';
 import InfoTooltip from './InfoTooltip';
+import ProtectedRoute from './ProtectedRoute';
 
 
 function App() {
@@ -23,8 +24,12 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({isOpen: false});
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', _id: '', avatar: ''});
   const [cards, setCards] = React.useState([]);
-  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(true);
   const [isLogged, setIsLogged] = React.useState(false);
+//
+  function handleSignOut() {
+    setIsLogged(false);
+  }
 
   React.useEffect(()=> {
     api.getProfileData()
@@ -39,7 +44,7 @@ function App() {
     setSelectedCard({ isOpen: false });
     setIsInfoTooltipPopupOpen(false);
   };
- 
+
   function handleUpdateUser(userInfo) {
     api.setNewProfileData(userInfo)
     .then(res => setCurrentUser(res))
@@ -110,35 +115,51 @@ function App() {
     <div className="page">
       <div className="page__container">
         <CurrentUserContext.Provider value = {currentUser}>
-          <Header />
+          <Header path = {{register: "sign-up", login: "sign-in"}}
+                  text = {{register: "Регистрация", login: "Войти"}}
+                  email = {"Guess-88@mail.ru"}
+                  isLogged = {isLogged}
+                  onExitClick = {handleSignOut}
+          />
           
           <Switch>
-            <Route path="/sign-up">
+            <ProtectedRoute component={Main}
+                            onEditProfile = {handleEditProfileClick}
+                            onAddPlace = {handleAddPlaceClick}
+                            onEditAvatar = {handleEditAvatarClick}
+                            onCardClick = {handleCardClick}
+                            cards = {cards}
+                            onLikeClick = {handleCardLike}
+                            onTrashClick = {handleCardDelete}
+                            loggedIn = {isLogged}
+                            exact path = "/"
+                            />
+       
+            {!isLogged && <Route path="/sign-up">
               <Register />
+            </Route>}
+
+            {!isLogged && <Route path="/sign-in">
+              <Login />
+            </Route>}
+
+            <Route>
+              { isLogged ? <Redirect to="/" /> : <Redirect to="/sign-in" /> }
             </Route>
 
-            <Route path="/sign-in">
-              <Login />
-            </Route>
-              <InfoTooltip  title={'Что-то пошло не так! Попробуйте еще раз.'}
-                            isOpen={isInfoTooltipPopupOpen}  
+          </Switch>
+              <InfoTooltip  isOpen={isInfoTooltipPopupOpen}  
                             onClose={closeAllPopups}  
+                            registrStatus = {false}
                             />
-              <Main onEditProfile = {handleEditProfileClick}
-                    onAddPlace = {handleAddPlaceClick}
-                    onEditAvatar = {handleEditAvatarClick}
-                    onCardClick = {handleCardClick}
-                    cards = {cards}
-                    onLikeClick = {handleCardLike}
-                    onTrashClick = {handleCardDelete}
-                    />     
-              <Footer />
+                            
+              {isLogged && <Footer />}
               <PopupWithForm />
               <AddPlacePopup isOpen = {isAddPlacePopupOpen}
-                            onClose = {closeAllPopups}
-                            onUpdateCards = {handleAddPlaceSubmit}
-                            buttonText = {"Сохранить"}
-                            />
+                             onClose = {closeAllPopups}
+                             onUpdateCards = {handleAddPlaceSubmit}
+                             buttonText = {"Сохранить"}
+                             />
               <EditProfilePopup isOpen = {isEditProfilePopupOpen}
                                 onClose = {closeAllPopups}
                                 onUpdateUser = {handleUpdateUser}
@@ -152,7 +173,6 @@ function App() {
               <ImagePopup card = {selectedCard}
                           onClose = {closeAllPopups}
                           />
-          </Switch>
         </CurrentUserContext.Provider>
       </div>
     </div>  

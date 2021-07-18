@@ -7,6 +7,9 @@
   background-position: left;
   background-size: contain;
   background-repeat: no-repeat;
+  /* transition: margin .15s ease-in; */
+  /* transition: width .2s ease-in; */
+  /* transition: height .2s ease-in; */
 }
 
 .header__logo:hover {

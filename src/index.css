@@ -32,6 +32,8 @@
 @import url(./blocks/popup/__form/_type/popup__form_type_delete-confirm.css);
 @import url(./blocks/popup/__title/_type/popup__title_type_registration-confirm.css);
 @import url(./blocks/popup/__status-img/popup__status-img.css);
+@import url(./blocks/popup/__status-img/_type/popup__status-img_type_accept.css);
+@import url(./blocks/popup/__status-img/_type/popup__status-img_type_reject.css);
 
 
 
