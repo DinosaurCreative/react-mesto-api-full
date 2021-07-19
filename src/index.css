@@ -36,11 +36,9 @@
 @import url(./blocks/popup/__status-img/_type/popup__status-img_type_reject.css);
 
 
-
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__container/header__container.css);
 @import url(./blocks/header/__container/_menu/header__container_menu.css);
-
 @import url(./blocks/header/__logo/header__logo.css);
 @import url(./blocks/header/__email/header__email.css);
 @import url(./blocks/header/__link/header__link.css);
@@ -79,7 +77,6 @@
 @import url(./blocks/profile/__loader/profile__loader.css);
 
 
-
 @import url(./blocks/grid/grid.css);
 @import url(./blocks/grid/__list/grid__list.css);
 @import url(./blocks/grid/__item/grid__item.css);
@@ -93,7 +90,6 @@
 @import url(./blocks/grid/__like__counter/grid__like-counter.css);
 @import url(./blocks/grid/__delete-btn/_type/grid__delete-btn_type_visible.css);
 @import url(./blocks/grid/__loader/grid__loader.css);
-
 
 
 @import url(./blocks/footer/footer.css);

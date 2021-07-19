@@ -7,8 +7,10 @@
   height: 24px;
   display: none;
   padding: 0;
-  transition: background-image .1s linear;
+  transition: background-image .1s linear, background-image .1s linear, opacity .2s linear;
+  background-size: contain;
 }
+
 .header__menu-btn:hover {
   opacity: .6;
 }

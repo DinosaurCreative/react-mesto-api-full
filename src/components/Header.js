@@ -25,7 +25,7 @@ function Header({...props}) {
           <p className="header__email">{props.userEmail}</p>
           <Link to="/sign-in" className="header__exit-link" onClick={signOut}>{"Выйти"}</Link>
          </div>}
-        {props.isLogged && <button className={`${ !isMenuOpen ? "header__menu-btn" : "header__menu-btn_type_close"}`} onClick={menuVisibilityToggle}/>}
+        {props.isLogged && <button className={`header__menu-btn ${ isMenuOpen ? "header__menu-btn_type_close" : ""}`} onClick={menuVisibilityToggle}/>}
       {!props.isLogged && <Link to={pathLink} className="header__link">{locationName}</Link>}
       </div>
     </header>

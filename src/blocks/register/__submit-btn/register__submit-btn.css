@@ -10,6 +10,7 @@
   line-height: 21.78px;
   transition: opacity .15s linear;
 }
+
 .register__submit-btn:hover {
   opacity: .85;
   cursor: pointer;
