@@ -1,5 +1,4 @@
-.header__link_menu {
-  /* margin: 18px auto 40px; */
+.header__exit-link {
   align-self: center;
   text-decoration: none;
   color: #A9A9A9;
@@ -7,12 +6,10 @@
   font-style: normal;
   font-size: 18px;
   line-height: 22px;
-  /* display: flex; */
 }
 
-
 @media screen and (max-width: 767px) {
-  .header__link_menu {
+  .header__exit-link {
     margin: 18px 0 0 0;
   }
 }

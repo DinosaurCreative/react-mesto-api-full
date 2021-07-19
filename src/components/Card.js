@@ -16,7 +16,7 @@ function Card({card,_ ,onCardClick, onLikeClick, onTrashClick}) {
   };
   
   function handleTrashClick(){
-    onTrashClick(card)
+    onTrashClick(card);
   };
 
   function checkIsLiked(card) {
@@ -36,6 +36,6 @@ function Card({card,_ ,onCardClick, onLikeClick, onTrashClick}) {
       </div>
     </li>
   );
-}
+};
 
 export default Card;

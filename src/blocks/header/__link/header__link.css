@@ -1,5 +1,5 @@
 .header__link {
-  /* margin: 6px 0 0; */
+  align-self: center;
   text-decoration: none;
   color: rgba(255, 255, 255, 1);
   font-weight: 400;
@@ -8,13 +8,11 @@
   line-height: 22px;
   transition: color .15s linear;
   display: flex;
-  align-self: center;
 }
 
 .header__link:hover {
   color: rgba(255, 255, 255, .6)
 }
-
 
 @media screen and (max-width: 767px) {
   .header__link {
