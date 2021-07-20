@@ -29,6 +29,7 @@ function App() {
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
   const history = useHistory();
+  const[isLoading, setIsloading] = React.useState(true);
 
   function handleCheckToken() {
     if(localStorage.getItem("JWT")) {
@@ -39,6 +40,7 @@ function App() {
         history.push('/');
         setIsLogged(true);
       })
+      .then(()=> setIsloading(false))
       .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
     }
   }
@@ -65,7 +67,6 @@ function App() {
     signIn({password, email})
     .then(res => {
       setIsLogged(true);
-      localStorage.setItem("isLogged", true);
       localStorage.setItem("JWT", res.token);
       setUserEmail(email);
       history.push('/');
@@ -75,7 +76,6 @@ function App() {
 
   function handleSignOut() {
     localStorage.removeItem("JWT");
-    localStorage.removeItem("isLogged");
     setIsLogged(false);
   }
 
@@ -159,70 +159,73 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
   
-  return (
-    <div className="page">
-      <div className="page__container">
-        <CurrentUserContext.Provider value={currentUser}>
-          <Header path={{register: "sign-up", login: "sign-in"}}
-                  text={{register: "Регистрация", login: "Войти"}}
-                  isLogged={isLogged}
-                  onExitClick={handleSignOut}
-                  userEmail={userEmail}
-          />
+  return ( isLoading 
+    ? <div className="page">
+        <div className="page__container" />
+      </div>  
+    : <div className="page">
+        <div className="page__container">
+         <CurrentUserContext.Provider value={currentUser}>
+            <Header path={{register: "sign-up", login: "sign-in"}}
+                    text={{register: "Регистрация", login: "Войти"}}
+                    isLogged={isLogged}
+                    onExitClick={handleSignOut}
+                    userEmail={userEmail}
+            />
           
-          <Switch>
-            <ProtectedRoute component={Main}
-                            onEditProfile={handleEditProfileClick}
-                            onAddPlace={handleAddPlaceClick}
-                            onCardClick={handleCardClick}
-                            onEditAvatar={handleEditAvatarClick}
-                            cards={cards}
-                            onLikeClick={handleCardLike}
-                            onTrashClick={handleCardDelete}
-                            loggedIn={isLogged}
-                            exact path = "/"
-                            />
+            <Switch>
+              <ProtectedRoute component={Main}
+                              onEditProfile={handleEditProfileClick}
+                              onAddPlace={handleAddPlaceClick}
+                              onCardClick={handleCardClick}
+                              onEditAvatar={handleEditAvatarClick}
+                              cards={cards}
+                              onLikeClick={handleCardLike}
+                              onTrashClick={handleCardDelete}
+                              loggedIn={isLogged}
+                              exact path = "/"
+                              />
 
-            {!localStorage.getItem("isLogged") && <Route path = "/sign-in">
-              <Login onSubmit={handleSignIn} />
-            </Route>}
+              {!isLogged && <Route path = "/sign-in">
+                <Login onSubmit={handleSignIn} />
+              </Route>}
        
-            {!isLogged && <Route path = "/sign-up">
-              <Register onSubmit={hadleSignUp} />
-            </Route>}
+              {!isLogged && <Route path = "/sign-up">
+                <Register onSubmit={hadleSignUp} />
+              </Route>}
 
-            <Route>
-              { isLogged ? <Redirect to = "/" /> : <Redirect to = "/sign-in" /> }
-            </Route>
-          </Switch>
-          <InfoTooltip  isOpen={isInfoTooltipPopupOpen}  
-                        onClose={closeAllPopups}  
-                        isRegistered={isRegistered}
-                        />
-                        
-          {isLogged && <Footer />}
-          <PopupWithForm />
-          <AddPlacePopup isOpen={isAddPlacePopupOpen}
-                          onClose={closeAllPopups}
-                          onUpdateCards={handleAddPlaceSubmit}
-                          buttonText={"Сохранить"}
+              <Route>
+                { isLogged ? <Redirect to = "/" /> : <Redirect to = "/sign-in" /> }
+              </Route>
+            </Switch>
+            <InfoTooltip  isOpen={isInfoTooltipPopupOpen}  
+                          onClose={closeAllPopups}  
+                          isRegistered={isRegistered}
                           />
-          <EditProfilePopup isOpen={isEditProfilePopupOpen}
+                          
+            {isLogged && <Footer />}
+            <PopupWithForm />
+            <AddPlacePopup isOpen={isAddPlacePopupOpen}
                             onClose={closeAllPopups}
-                            onUpdateUser={handleUpdateUser}
+                            onUpdateCards={handleAddPlaceSubmit}
                             buttonText={"Сохранить"}
                             />
-          {isEditAvatarPopupOpen && <EditAvatarPopup isOpen={isEditAvatarPopupOpen}
-                          onClose={closeAllPopups}
-                          onUpdateAvatar={handleUpdateAvatar}
-                          buttonText={"Сохранить"}
-                          />}
-          <ImagePopup card={selectedCard}
-                      onClose={closeAllPopups}
-                      />
-        </CurrentUserContext.Provider>
-      </div>
-    </div>  
+            <EditProfilePopup isOpen={isEditProfilePopupOpen}
+                              onClose={closeAllPopups}
+                              onUpdateUser={handleUpdateUser}
+                              buttonText={"Сохранить"}
+                              />
+            <EditAvatarPopup isOpen={isEditAvatarPopupOpen}
+                            onClose={closeAllPopups}
+                            onUpdateAvatar={handleUpdateAvatar}
+                            buttonText={"Сохранить"}
+                            />
+            <ImagePopup card={selectedCard}
+                        onClose={closeAllPopups}
+                        />
+          </CurrentUserContext.Provider>
+        </div>
+      </div>  
   );
 };
 
