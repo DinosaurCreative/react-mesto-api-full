@@ -82,6 +82,7 @@ function App() {
   React.useEffect(()=> {
     api.getProfileData()
     .then(userInfo => setCurrentUser(userInfo))
+    .then(()=> setIsloading(false))
     .catch(err => console.log(`Ошибка при получении данных профиля: ${err}`))
   },[]);
 
