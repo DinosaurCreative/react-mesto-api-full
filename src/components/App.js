@@ -64,11 +64,11 @@ function App() {
   function handleSignIn({password, email}) {
     signIn({password, email})
     .then(res => {
-      history.push('/');
       setIsLogged(true);
-      localStorage.setItem("JWT", res.token);
       localStorage.setItem("isLogged", true);
+      localStorage.setItem("JWT", res.token);
       setUserEmail(email);
+      history.push('/');
     })
     .catch(err => console.log(`Ошибка при авторизации: ${err}`))
   }
@@ -187,7 +187,7 @@ function App() {
               <Login onSubmit={handleSignIn} />
             </Route>}
        
-            {!localStorage.getItem("isLogged") && <Route path = "/sign-up">
+            {!isLogged && <Route path = "/sign-up">
               <Register onSubmit={hadleSignUp} />
             </Route>}
 
