@@ -1,6 +1,14 @@
+// const jwt = require('jsonwebtoken');
+
 const Card = require('../models/card');
 
-const { badRequest, notFound, defaultErr } = require('../utils/constants');
+const {
+  badRequest, notFound, defaultErr, forbidden,
+} = require('../utils/constants');
+
+function checkRightsHandler(res) {
+  return res.status(forbidden).send({ message: 'Недостаточно прав для удаления карточки.' });
+}
 
 module.exports.getCards = (req, res) => {
   Card.find({})
@@ -23,17 +31,27 @@ module.exports.createCard = (req, res) => {
 };
 
 module.exports.deleteCard = (req, res) => {
-  Card.findByIdAndRemove(req.params.id)
-    .orFail(new Error('UnknownId'))
-    .then((card) => res.send({ message: `Фотография "${card.name}" удалена!` }))
-    .catch((err) => {
-      if (err.message === 'UnknownId') {
-        res.status(notFound).send({ message: 'Карточка с указанным _id не найдена.' });
-      } else if (err.name === 'CastError') {
-        res.status(badRequest).send({ message: 'Переданы некорректные данные для удаления фото' });
-      } else {
-        res.status(defaultErr).send({ message: err.message });
+  Card.findById(req.params.id)
+    .then((pic) => {
+      if (String(pic.owner) !== req.user._id) {
+        checkRightsHandler(res);
+        return;
       }
+      Card.findByIdAndRemove(req.params.id)
+        .orFail(new Error('UnknownId'))
+        .then((card) => {
+          console.log(card);
+          res.send({ message: `Фотография "${card.name}" удалена!` });
+        })
+        .catch((err) => {
+          if (err.message === 'UnknownId') {
+            res.status(notFound).send({ message: 'Карточка с указанным _id не найдена.' });
+          } else if (err.name === 'CastError') {
+            res.status(badRequest).send({ message: 'Переданы некорректные данные для удаления фото' });
+          } else {
+            res.status(defaultErr).send({ message: err.message });
+          }
+        });
     });
 };
 

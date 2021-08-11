@@ -27,6 +27,20 @@ module.exports.getUser = (req, res) => {
     });
 };
 
+module.exports.getCurrentUser = (req, res) => {
+  User.findById(req.user)
+    .then((user) => res.send(user))
+    .catch((err) => {
+      if (err.message === 'UnknownId') {
+        res.status(notFound).send({ message: 'Пользователь по указанному _id не найден.' });
+      } else if (err.name === 'CastError') {
+        res.status(badRequest).send({ message: 'Переданы некорректные данные при запросе пользователя.' });
+      } else {
+        res.status(defaultErr).send({ message: err.message });
+      }
+    });
+};
+
 module.exports.createUser = (req, res) => {
   const {
     name, about, avatar, email, password,
@@ -102,11 +116,11 @@ module.exports.login = (req, res) => {
 
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, 'не-понял-зачем-нужен-key', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, 'не-понял-концепции-key', { expiresIn: '7d' });
       res.cookie('_id', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-      }).send({ message: token });
+      }).send({ token });
     })
     .catch((err) => {
       res.status(unauthorized).send({ message: err.message });
