@@ -21,6 +21,11 @@ app.use('/users', require('./routes/users'));
 app.use((req, res) => {
   res.status(404).send({ message: 'Не смотри, я не накрашена!' });
 });
+app.use((err, req, res, next) => {
+  const { statusCode = 500, message = 'На сервере произошла ошибка' } = err;
+  res.status(statusCode).send({ message });
+  next();
+});
 
 app.listen(PORT, () => {
   console.log(`Подключено к порту ${PORT}.`);

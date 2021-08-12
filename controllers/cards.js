@@ -1,77 +1,72 @@
-// const jwt = require('jsonwebtoken');
-
 const Card = require('../models/card');
+const BadRequestError = require('../errors/BadRequestError');
+const DefaultError = require('../errors/DefaultError');
+const NotFoundError = require('../errors/NotFoundError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
-const {
-  badRequest, notFound, defaultErr, forbidden,
-} = require('../utils/constants');
-
-function checkRightsHandler(res) {
-  return res.status(forbidden).send({ message: 'Недостаточно прав для удаления карточки.' });
-}
-
-module.exports.getCards = (req, res) => {
+module.exports.getCards = (req, res, next) => {
   Card.find({})
     .then((cards) => res.send({ data: cards }))
-    .catch((err) => res.status(defaultErr).send({ message: err.message }));
+    .catch((err) => {
+      next(new DefaultError(err.message));
+    });
 };
 
-module.exports.createCard = (req, res) => {
+module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
 
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(badRequest).send({ message: 'Переданы некорректные данные при создании карточки.' });
+        next(new BadRequestError('Переданы некорректные данные при создании карточки.'));
       } else {
-        res.status(defaultErr).send({ message: err.message });
+        next(new DefaultError(err.message));
       }
     });
 };
 
-module.exports.deleteCard = (req, res) => {
+module.exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.id)
     .then((pic) => {
       if (String(pic.owner) !== req.user._id) {
-        checkRightsHandler(res);
+        next(new ForbiddenError('Недостаточно прав для удаления карточки.'));
         return;
       }
       Card.findByIdAndRemove(req.params.id)
         .orFail(new Error('UnknownId'))
         .then((card) => {
-          console.log(card);
           res.send({ message: `Фотография "${card.name}" удалена!` });
         })
         .catch((err) => {
           if (err.message === 'UnknownId') {
-            res.status(notFound).send({ message: 'Карточка с указанным _id не найдена.' });
+            next(new NotFoundError('Карточка с указанным _id не найдена.'));
           } else if (err.name === 'CastError') {
-            res.status(badRequest).send({ message: 'Переданы некорректные данные для удаления фото' });
+            next(new BadRequestError('Переданы некорректные данные для удаления фото'));
           } else {
-            res.status(defaultErr).send({ message: err.message });
+            next(new DefaultError(err.message));
           }
         });
     });
 };
 
-module.exports.likeCard = (req, res) => {
+module.exports.likeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.id,
     { $addToSet: { likes: req.user._id } }, { new: true })
     .orFail(new Error('UnknownId'))
     .then((card) => res.send({ data: card }))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(badRequest).send({ message: 'Переданы некорректные данные для постановки лайка' });
+        next(new BadRequestError('Переданы некорректные данные для постановки лайка'));
       } else if (err.message === 'UnknownId') {
-        res.status(notFound).send({ message: 'Карточка с указанным _id не найдена.' });
+        next(new NotFoundError('Карточка с указанным _id не найдена.'));
       } else {
-        res.status(defaultErr).send({ message: err.message });
+        next(new DefaultError(err.message));
       }
     });
 };
 
-module.exports.dislikeCard = (req, res) => {
+module.exports.dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(req.params.id,
     { $pull: { likes: req.user._id } }, { new: true })
     .orFail(new Error('UnknownId'))
@@ -79,11 +74,11 @@ module.exports.dislikeCard = (req, res) => {
     .then((card) => res.send({ data: card }))
     .catch((err) => {
       if (err.name === 'CastError') {
-        res.status(badRequest).send({ message: 'Переданы некорректные данные для снятия лайка' });
+        next(new BadRequestError('Переданы некорректные данные для снятия лайка'));
       } else if (err.message === 'UnknownId') {
-        res.status(notFound).send({ message: 'Карточка с указанным _id не найдена.' });
+        next(new NotFoundError('Карточка с указанным _id не найдена.'));
       } else {
-        res.status(defaultErr).send({ message: err.message });
+        next(new DefaultError(err.message));
       }
     });
 };
