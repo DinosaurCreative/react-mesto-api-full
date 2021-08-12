@@ -47,7 +47,7 @@ module.exports.createUser = (req, res) => {
   } = req.body;
   bcrypt.hash(password, 10)
     .then((hash) => {
-      // if (!password) {
+      // if (!password) {  //проверка длинны пароля
       //   throw new Error('passwordMissing');
       // } else if (password.length < 8) {
       //   throw new Error('shortPassword');
