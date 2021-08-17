@@ -3,6 +3,7 @@ const BadRequestError = require('../errors/BadRequestError');
 const DefaultError = require('../errors/DefaultError');
 const NotFoundError = require('../errors/NotFoundError');
 const ForbiddenError = require('../errors/ForbiddenError');
+const UnauthorizedError = require('../errors/UnauthorizedError');
 const {
   nameLengthErr,
   badUrlErr,
@@ -28,7 +29,7 @@ module.exports.createCard = (req, res, next) => {
       if (err.message.includes('nameError')) {
         next(new BadRequestError(nameLengthErr));
       } else if (err.message.includes('linkError')) {
-        next(new BadRequestError(badUrlErr));
+        next(new UnauthorizedError(badUrlErr));
       } else {
         next(new DefaultError(err.message));
       }
