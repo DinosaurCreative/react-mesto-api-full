@@ -1,15 +1,24 @@
 const mongoose = require('mongoose');
+const { linkRegex } = require('../utils/constants');
 
 const cardSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    minlength: 2,
-    maxlength: 30,
+    validate(v) {
+      if (v.length < 2 || v.length > 30) {
+        throw new Error('nameError');
+      }
+    },
   },
   link: {
     type: String,
     required: true,
+    validate(v) {
+      if (!linkRegex.test(v)) {
+        throw new Error('linkError');
+      }
+    },
   },
 
   owner: {

@@ -1,15 +1,5 @@
-const badRequest = 400;
-const unauthorized = 401;
-const forbidden = 403;
-const notFound = 404;
-const conflict = 409;
-const defaultErr = 500;
+const linkRegex = /https?:\/\/(w{3}\.)?([0-9a-zA-Z-._~:/?#&'()*,;=+!@[\]]{1,256})/i;
 
 module.exports = {
-  badRequest,
-  unauthorized,
-  forbidden,
-  notFound,
-  conflict,
-  defaultErr,
+  linkRegex,
 };

@@ -1,5 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv').config();
+const errorHandler = require('./middlewares/errorHandler');
+const { createUserValidation, loginValidation } = require('./middlewares/validators');
+const cardRoutes = require('./routes/cards');
+const userRoutes = require('./routes/users');
+
+const { createUser, login } = require('./controllers/users');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -14,18 +21,17 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
-app.use('/cards', require('./routes/cards'));
+app.post('/signup', createUserValidation, createUser);
+app.post('/signin', loginValidation, login);
 
-app.use('/users', require('./routes/users'));
+app.use('/', cardRoutes);
+app.use('/', userRoutes);
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Не смотри, я не накрашена!' });
 });
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message = 'На сервере произошла ошибка' } = err;
-  res.status(statusCode).send({ message });
-  next();
-});
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Подключено к порту ${PORT}.`);

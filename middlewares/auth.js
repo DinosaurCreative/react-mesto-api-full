@@ -1,9 +1,8 @@
 const jwt = require('jsonwebtoken');
-const { unauthorized, forbidden } = require('../utils/constants');
+const UnauthorizedError = require('../errors/UnauthorizedError');
+const ForbiddenError = require('../errors/ForbiddenError');
 
-function handleAuthError(res) {
-  return res.status(forbidden).send({ message: 'Авторизуйтесь' });
-}
+const { JWT_SECRET } = process.env;
 
 function extractBearerToken(header) {
   return header.replace('_id=', '');
@@ -12,15 +11,15 @@ function extractBearerToken(header) {
 module.exports = (req, res, next) => {
   const authorization = req.headers.cookie;
   if (!authorization || !authorization.startsWith('_id=')) {
-    handleAuthError(res);
+    next(new ForbiddenError('Авторизуйтесь'));
     return;
   }
   const token = extractBearerToken(authorization);
   let payload;
   try {
-    payload = jwt.verify(token, 'не-понял-концепции-key');
+    payload = jwt.verify(token, JWT_SECRET);
   } catch (err) {
-    res.status(unauthorized).send({ message: 'Ошибка авторизации' });
+    next(new UnauthorizedError('Ошибка авторизации'));
   }
   req.user = payload;
   next();

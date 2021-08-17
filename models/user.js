@@ -1,30 +1,42 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
-const validator = require('validator');
+const { isEmail } = require('validator');
+const { linkRegex } = require('../utils/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     default: 'Жак-Ив Кусто',
-    minlength: 2,
-    maxlength: 30,
+    validate(v) {
+      if (v.length < 2 || v.length > 30) {
+        throw new Error('nameError');
+      }
+    },
   },
   about: {
     type: String,
     default: 'Исследователь',
-    minlength: 2,
-    maxlength: 30,
+    validate(v) {
+      if (v.length < 2 || v.length > 30) {
+        throw new Error('aboutError');
+      }
+    },
   },
   avatar: {
     type: String,
     default: 'https://pictures.s3.yandex.net/resources/jacques-cousteau_1604399756.png',
+    validate(v) {
+      if (!linkRegex.test(v)) {
+        throw new Error('linkError');
+      }
+    },
   },
   email: {
     type: String,
     required: true,
     unique: true,
     validate(value) {
-      if (!validator.isEmail(value)) {
+      if (!isEmail(value)) {
         throw new Error('emailError');
       }
     },
@@ -51,5 +63,13 @@ userSchema.statics.findUserByCredentials = function (email, password) {
         });
     });
 };
+
+function toJSON() {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+}
+
+userSchema.methods.toJSON = toJSON;
 
 module.exports = mongoose.model('user', userSchema);
