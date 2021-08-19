@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const { errors } = require('celebrate');
 const errorHandler = require('./middlewares/errorHandler');
 const { createUserValidation, loginValidation } = require('./middlewares/validators');
 const cardRoutes = require('./routes/cards');
@@ -30,7 +31,7 @@ app.use('/', userRoutes);
 app.use((req, res) => {
   res.status(404).send({ message: 'Не смотри, я не накрашена!' });
 });
-
+app.use(errors());
 app.use(errorHandler);
 
 app.listen(PORT, () => {

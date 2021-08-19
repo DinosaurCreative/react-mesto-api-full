@@ -17,6 +17,9 @@ const {
   nameLengthErr,
   aboutLengthErr,
   badEmailOrPass,
+  badIdValue,
+  badEmailValue,
+  badPasswordValue,
 } = require('../utils/errorsMessages');
 
 module.exports.getUsers = (req, res, next) => {
@@ -26,17 +29,20 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUser = (req, res, next) => {
+  if (req.params.id.length !== 24) {
+    next(new BadRequestError(badIdValue));
+    return;
+  }
   User.findById(req.params.id)
     .orFail(new Error('UnknownId'))
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.message === 'UnknownId') {
-        next(new NotFoundError(usersIdMissing));
-      } else if (err.name === 'CastError') {
-        next(new BadRequestError(badValue));
-      } else {
-        next(new DefaultError(err.message));
+        return next(new NotFoundError(usersIdMissing));
+      } if (err.name === 'CastError') {
+        return next(new BadRequestError(badValue));
       }
+      return next(new DefaultError(err.message));
     });
 };
 
@@ -46,12 +52,11 @@ module.exports.getCurrentUser = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.message === 'UnknownId') {
-        next(new NotFoundError(usersIdMissing));
-      } else if (err.name === 'CastError') {
-        next(new BadRequestError(badValue));
-      } else {
-        next(new DefaultError(err.message));
+        return next(new NotFoundError(usersIdMissing));
+      } if (err.name === 'CastError') {
+        return next(new BadRequestError(badValue));
       }
+      return next(new DefaultError(err.message));
     });
 };
 
@@ -60,7 +65,13 @@ module.exports.createUser = (req, res, next) => {
     name, about, avatar, email, password,
   } = req.body;
 
-  if (password.length < 8) {
+  if (!email) {
+    next(new BadRequestError(badEmailValue));
+    return;
+  } if (!password) {
+    next(new BadRequestError(badPasswordValue));
+    return;
+  } if (password.length < 8) {
     next(new BadRequestError(shortPassErr));
     return;
   }
@@ -74,25 +85,27 @@ module.exports.createUser = (req, res, next) => {
         .catch((err) => {
           console.log(err.message);
           if (err.message.includes('emailError')) {
-            next(new BadRequestError(wrongEmail));
-          } else if (err.message.includes('linkError')) {
-            next(new BadRequestError(badValue));
-          } else if (err.code === 11000 && err.name === 'MongoError') {
-            next(new ConflictError(emailTaken));
-          } else if (err.message.includes('nameError')) {
-            next(new BadRequestError(nameLengthErr));
-          } else if (err.message.includes('aboutError')) {
-            next(new BadRequestError(aboutLengthErr));
-          } else {
-            next(new DefaultError(err.message));
+            return next(new BadRequestError(wrongEmail));
+          } if (err.message.includes('linkError')) {
+            return next(new BadRequestError(badValue));
+          } if (err.code === 11000 && err.name === 'MongoError') {
+            return next(new ConflictError(emailTaken));
+          } if (err.message.includes('nameError')) {
+            return next(new BadRequestError(nameLengthErr));
+          } if (err.message.includes('aboutError')) {
+            return next(new BadRequestError(aboutLengthErr));
           }
+          return next(new DefaultError(err.message));
         });
-    }).catch((err) => {
-      next(new DefaultError(err.message));
-    });
+    }).catch((err) => next(new DefaultError(err.message)));
 };
 
 module.exports.updateAvatar = (req, res, next) => {
+  if (!req.body.avatar) {
+    next(new BadRequestError(badValue));
+    return;
+  }
+
   const { avatar } = req.body;
 
   User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true, new: true })
@@ -100,12 +113,11 @@ module.exports.updateAvatar = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.message === 'UnknownId') {
-        next(new NotFoundError(usersIdMissing));
-      } else if (err.message.includes('linkError')) {
-        next(new BadRequestError(badValue));
-      } else {
-        next(new DefaultError(err.message));
+        return next(new NotFoundError(usersIdMissing));
+      } if (err.message.includes('linkError')) {
+        return next(new BadRequestError(badValue));
       }
+      return next(new DefaultError(err.message));
     });
 };
 
@@ -117,14 +129,13 @@ module.exports.updateProfile = (req, res, next) => {
     .then((user) => res.send(user))
     .catch((err) => {
       if (err.message === 'UnknownId') {
-        next(new NotFoundError(usersIdMissing));
-      } else if (err.message.includes('nameError')) {
-        next(new BadRequestError(nameLengthErr));
-      } else if (err.message.includes('aboutError')) {
-        next(new BadRequestError(aboutLengthErr));
-      } else {
-        next(new DefaultError(err.message));
+        return next(new NotFoundError(usersIdMissing));
+      } if (err.message.includes('nameError')) {
+        return next(new BadRequestError(nameLengthErr));
+      } if (err.message.includes('aboutError')) {
+        return next(new BadRequestError(aboutLengthErr));
       }
+      return next(new DefaultError(err.message));
     });
 };
 
@@ -141,11 +152,10 @@ module.exports.login = (req, res, next) => {
     })
     .catch((err) => {
       if (err.message === 'invailidEmailOrPassword') {
-        next(new UnauthorizedError(badEmailOrPass));
-      } else if (err.message.includes('emailError')) {
-        next(new BadRequestError(badEmailOrPass));
-      } else {
-        next(new DefaultError(err.message));
+        return next(new UnauthorizedError(badEmailOrPass));
+      } if (err.message.includes('emailError')) {
+        return next(new BadRequestError(badEmailOrPass));
       }
+      return next(new DefaultError(err.message));
     });
 };
