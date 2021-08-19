@@ -11,15 +11,11 @@ const { JWT_SECRET, NODE_ENV } = process.env;
 const {
   usersIdMissing,
   badValue,
-  shortPassErr,
   wrongEmail,
   emailTaken,
   nameLengthErr,
   aboutLengthErr,
   badEmailOrPass,
-  badIdValue,
-  badEmailValue,
-  badPasswordValue,
 } = require('../utils/errorsMessages');
 
 module.exports.getUsers = (req, res, next) => {
@@ -29,10 +25,6 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUser = (req, res, next) => {
-  if (req.params.id.length !== 24) {
-    next(new BadRequestError(badIdValue));
-    return;
-  }
   User.findById(req.params.id)
     .orFail(new Error('UnknownId'))
     .then((user) => res.send(user))
@@ -65,17 +57,6 @@ module.exports.createUser = (req, res, next) => {
     name, about, avatar, email, password,
   } = req.body;
 
-  if (!email) {
-    next(new BadRequestError(badEmailValue));
-    return;
-  } if (!password) {
-    next(new BadRequestError(badPasswordValue));
-    return;
-  } if (password.length < 8) {
-    next(new BadRequestError(shortPassErr));
-    return;
-  }
-
   bcrypt.hash(password, 10)
     .then((hash) => {
       User.create({
@@ -101,11 +82,6 @@ module.exports.createUser = (req, res, next) => {
 };
 
 module.exports.updateAvatar = (req, res, next) => {
-  if (!req.body.avatar) {
-    next(new BadRequestError(badValue));
-    return;
-  }
-
   const { avatar } = req.body;
 
   User.findByIdAndUpdate(req.user._id, { avatar }, { runValidators: true, new: true })
@@ -146,7 +122,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret', { expiresIn: '7d' });
       res.cookie('_id', token, {
-        maxAge: 3600000 * 24 * 7,
+        maxAge: 360,
         httpOnly: true,
       }).send({ message: 'Авторизация успешна' });
     })

@@ -5,13 +5,13 @@ const ownerRigthsErr = 'Недостаточно прав для удалени�
 const cardsIdMissing = 'Карточка с указанным id не найдена.';
 const badValue = 'Переданы некорректные данные.';
 const usersIdMissing = 'Пользователь с указанным id не найдена.';
-const shortPassErr = 'Пароль не должен быть менее восьми символов.';
+// const shortPassErr = 'Пароль не должен быть менее восьми символов.';
 const wrongEmail = 'Введен неверный имейл.';
 const emailTaken = 'Пользовател с таким имейлом уже существует.';
 const badEmailOrPass = 'Неверная почта или пароль.';
-const badIdValue = 'Невалидный формат запрашиваемого id';
-const badEmailValue = 'Отсутствует обязательное поле email.';
-const badPasswordValue = 'Отсутствует обязательное поле password.';
+// const badIdValue = 'Невалидный формат запрашиваемого id';
+// const badEmailValue = 'Отсутствует обязательное поле email.';
+// const badPasswordValue = 'Отсутствует обязательное поле password.';
 
 module.exports = {
   nameLengthErr,
@@ -20,12 +20,12 @@ module.exports = {
   cardsIdMissing,
   badValue,
   usersIdMissing,
-  shortPassErr,
+  // shortPassErr,
   wrongEmail,
   emailTaken,
   aboutLengthErr,
   badEmailOrPass,
-  badIdValue,
-  badEmailValue,
-  badPasswordValue,
+  // badIdValue,
+  // badEmailValue,
+  // badPasswordValue,
 };
