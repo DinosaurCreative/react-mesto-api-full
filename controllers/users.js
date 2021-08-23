@@ -122,7 +122,7 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret', { expiresIn: '7d' });
       res.cookie('_id', token, {
-        maxAge: 360,
+        maxAge: 360000 * 24 * 7,
         httpOnly: true,
       }).send({ message: 'Авторизация успешна' });
     })
