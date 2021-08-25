@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "npx eslint .",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "vm" : "ssh gimalaev@178.154.222.197"
   },
   "keywords": [],
   "author": "German Gimaev",
