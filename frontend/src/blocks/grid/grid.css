@@ -1,0 +1,10 @@
+.grid {
+  margin-top: 51px;
+  position: relative;
+}
+
+@media screen and (max-width: 767px) {
+  .grid {
+    margin:  0;
+  }
+}

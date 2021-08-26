@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  padding: 0 200px;
+  margin: 0;
+  flex-direction: column;
+  position: relative;
+}
+
+.header::after {
+  content: '';
+  border-bottom: 1px rgba(54, 54, 54, .7) solid;
+}
+
+@media screen and (max-width: 1279px) {
+  .header {
+    padding: 0 120px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .header {
+    padding: 0 60px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 0;
+  }
+}

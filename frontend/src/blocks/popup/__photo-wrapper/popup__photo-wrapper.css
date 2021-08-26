@@ -1,0 +1,5 @@
+.popup__photo-wrapper {
+  justify-self: center;
+  align-self: center;
+  position: relative;
+}

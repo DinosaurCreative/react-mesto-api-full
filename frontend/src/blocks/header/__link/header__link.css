@@ -1,0 +1,22 @@
+.header__link {
+  align-self: center;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 1);
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 22px;
+  transition: color .15s linear;
+  display: flex;
+}
+
+.header__link:hover {
+  color: rgba(255, 255, 255, .6)
+}
+
+@media screen and (max-width: 767px) {
+  .header__link {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

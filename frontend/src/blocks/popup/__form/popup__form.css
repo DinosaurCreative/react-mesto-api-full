@@ -1,0 +1,5 @@
+.popup__form {
+  max-width: fit-content;
+  position: relative;
+  width: 100%;
+}
