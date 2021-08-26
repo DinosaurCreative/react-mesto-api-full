@@ -7,7 +7,8 @@
     "lint": "npx eslint .",
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "vm" : "ssh gimalaev@178.154.222.197"
+    "vm" : "ssh gimalaev@178.154.222.197",
+    "nginx": "sudo nano /etc/nginx/sites-available/default"
   },
   "keywords": [],
   "author": "German Gimaev",
@@ -16,7 +17,8 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "nginx": "sudo nano /etc/nginx/sites-available/default"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
