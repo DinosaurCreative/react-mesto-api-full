@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const { errors } = require('celebrate');
-const cors = require('cors');
+const cors = require('./middlewares/corsHandler');
 const errorHandler = require('./middlewares/errorHandler');
 const { createUserValidation, loginValidation } = require('./middlewares/validators');
 const cardRoutes = require('./routes/cards');
@@ -12,8 +12,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 const app = express();
-
-app.use(cors());
+app.use(cors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
