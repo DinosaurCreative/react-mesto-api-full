@@ -123,6 +123,6 @@ export class Api {
   }
 }
 
-const api = new Api({ address: 'http://lookaround.students.nomoredomains.club/' });
+const api = new Api({ address: 'http://api.lookaround.nomoredomains.club/' });
 
 export default api;

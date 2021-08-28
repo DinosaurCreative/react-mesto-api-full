@@ -49,7 +49,6 @@ function App() {
     handleCheckToken();
   },[]);
 
-
   function hadleSignUp({password, email}) {
     signUp({password, email})
     .then(() => {
