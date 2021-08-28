@@ -7,19 +7,21 @@ function cors(req, res, next) {
     'https://lookaround.students.nomoredomains.club/',
   ];
   const allowedMethods = 'GET,PUT,PATCH,DELETE,POST,HEAD';
-  const { origin } = req.headers;
   const { method } = req;
   const requestHeaders = req.headers['access-control-request-headers'];
-
+  const { origin } = req.headers;
   if (allowedCors.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
   }
 
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', allowedMethods);
-    res.header('Access-Control-Allow-Headers', requestHeaders);
+    res.header('Access-Control-Allow-', requestHeaders);
+    console.log('YES');
     res.end();
   }
+
   next();
 }
 
