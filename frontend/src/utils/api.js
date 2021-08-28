@@ -124,6 +124,6 @@ export class Api {
   }
 }
 
-const api = new Api({ address: 'https://nomoreparties.co/v1/cohort-24/', token: '1b42587b-1212-49d2-8dac-fba90d326288' });
+const api = new Api({ address: 'http://lookaround.students.nomoredomains.club/', token: '1b42587b-1212-49d2-8dac-fba90d326288' });
 
 export default api;
