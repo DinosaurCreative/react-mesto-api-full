@@ -1,7 +1,6 @@
 export class Api {
-  constructor({address, token}) {
+  constructor({address}) {
     this._address = address;
-    this._token = token;
   }
   
   _checkServerResponse(item) {
@@ -16,9 +15,9 @@ export class Api {
       return fetch(`${this._address}users/me`, {
         method: 'GET',
         headers: {
-          authorization: this._token,
           'Content-Type': 'application/json'
-        }
+        },
+        credentials: 'include',
       })
       .then(res => this._checkServerResponse(res))
     }
@@ -27,9 +26,9 @@ export class Api {
     return fetch(`${this._address}cards`,{
       method: 'GET',
       headers: {
-        authorization: this._token,
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include',
     })
     .then(res => this._checkServerResponse(res))
   }
@@ -39,9 +38,9 @@ export class Api {
    return fetch(`${this._address}users/me`, {
       method: 'PATCH',
       headers: {
-        authorization: this._token,
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -54,9 +53,9 @@ export class Api {
     return fetch(`${this._address}cards`, {
       method: 'POST',
       headers: {
-        authorization: this._token,
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({
         name: data.name,
         link: data.link,
@@ -69,9 +68,9 @@ export class Api {
    return fetch(`${this._address}cards/${id}`, {
       method: 'DELETE',
       headers:{
-        authorization: this._token,
         'Content-Type': 'application/json'
-      }
+      },
+      credentials: 'include',
     })
     .then(res => this._checkServerResponse(res))
     .catch(err => console.log(`Ошибка: ${err}`))
@@ -81,9 +80,9 @@ export class Api {
     return fetch(`${this._address}users/me/avatar`, {
       method: 'PATCH',
       headers: {
-        authorization: this._token,
         'Content-Type': 'application/json'
       },
+      credentials: 'include',
       body: JSON.stringify({
         avatar: link
       })
@@ -95,9 +94,9 @@ export class Api {
     return fetch(`${this._address}cards/likes/${id}`, {
       method: 'PUT',
       headers: {
-        authorization: this._token,
         'Content-Type': 'applictaion/json'
-      }
+      },
+      credentials: 'include',
     })
     .then(res => this._checkServerResponse(res))
   }
@@ -107,9 +106,9 @@ export class Api {
     return fetch(`${this._address}cards/likes/${id}`, {
       method: 'DELETE',
       headers: {
-        authorization: this._token,
         'Content-Type': 'applictaion/json'
-      }
+      },
+      credentials: 'include',
     })
     .then(res => this._checkServerResponse(res))
   }
@@ -124,6 +123,6 @@ export class Api {
   }
 }
 
-const api = new Api({ address: 'http://lookaround.students.nomoredomains.club/', token: '1b42587b-1212-49d2-8dac-fba90d326288' });
+const api = new Api({ address: 'http://lookaround.students.nomoredomains.club/' });
 
 export default api;
