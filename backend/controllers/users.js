@@ -64,7 +64,6 @@ module.exports.createUser = (req, res, next) => {
       })
         .then((user) => res.send(user))
         .catch((err) => {
-          console.log(err.message);
           if (err.message.includes('emailError')) {
             return next(new BadRequestError(wrongEmail));
           } if (err.message.includes('linkError')) {
