@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 app.use(cors({
-  origin: 'http://api.lookaround.nomoredomains.club/',
+  origin: '*',
   credentials: true,
 }));
 app.use(helmet());
