@@ -34,7 +34,7 @@ export function signIn({password, email}) {
   .then(res => checkServerResponse(res))
 };
 
-export function checkToken(token) {
+export function checkToken() {
   return fetch(`${BASE_URL}users/me`, {
     method: "GET",
     headers: {
