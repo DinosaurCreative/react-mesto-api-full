@@ -1,7 +1,7 @@
 export class Api {
-  constructor({address, token}) {
+  constructor({address, headers}) {
     this._address = address;
-    this._token = token;
+    this._headers = headers;
   }
   
   _checkServerResponse(item) {
@@ -15,10 +15,7 @@ export class Api {
     getProfileData() {
       return fetch(`${this._address}users/me`, {
         method: 'GET',
-        headers: {
-          authorization: this._token,
-          'Content-Type': 'application/json'
-        }
+        headers: this._headers,
       })
       .then(res => this._checkServerResponse(res))
     }
@@ -26,10 +23,7 @@ export class Api {
   getImages(){
     return fetch(`${this._address}cards`,{
       method: 'GET',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      }
+      headers: this._headers,
     })
     .then(res => this._checkServerResponse(res))
   }
@@ -38,10 +32,7 @@ export class Api {
   setNewProfileData(data) {
    return fetch(`${this._address}users/me`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -53,10 +44,7 @@ export class Api {
   postImage(data) {
     return fetch(`${this._address}cards`, {
       method: 'POST',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: data.name,
         link: data.link,
@@ -68,10 +56,7 @@ export class Api {
   deleteImage(id) {
    return fetch(`${this._address}cards/${id}`, {
       method: 'DELETE',
-      headers:{
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      }
+      headers: this._headers,
     })
     .then(res => this._checkServerResponse(res))
     .catch(err => console.log(`Ошибка: ${err}`))
@@ -80,10 +65,7 @@ export class Api {
   changeAvatar(link) {
     return fetch(`${this._address}users/me/avatar`, {
       method: 'PATCH',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'application/json'
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: link
       })
@@ -94,10 +76,7 @@ export class Api {
   increaseLike(id) {
     return fetch(`${this._address}cards/likes/${id}`, {
       method: 'PUT',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'applictaion/json'
-      }
+      headers: this._headers,
     })
     .then(res => this._checkServerResponse(res))
   }
@@ -106,10 +85,7 @@ export class Api {
   reduceLike(id) {
     return fetch(`${this._address}cards/likes/${id}`, {
       method: 'DELETE',
-      headers: {
-        authorization: this._token,
-        'Content-Type': 'applictaion/json'
-      }
+      headers: this._headers,
     })
     .then(res => this._checkServerResponse(res))
   }
@@ -124,6 +100,11 @@ export class Api {
   }
 }
 
-const api = new Api({ address: 'https://nomoreparties.co/v1/cohort-24/', token: '1b42587b-1212-49d2-8dac-fba90d326288' });
+const api = new Api({
+  address: 'http://api.lookaround.nomoredomains.club/',
+  headers:{
+    'Content-Type': 'application/json'
+  }
+});
 
 export default api;
