@@ -32,9 +32,7 @@ function App() {
   const[isLoading, setIsloading] = React.useState(true);
 
   function handleCheckToken() {
-    if(localStorage.getItem("JWT")) {
-      const jwt = localStorage.getItem("JWT");
-      checkToken(jwt)
+      checkToken()
       .then(res => {
         setUserEmail(res.data.email);
         history.push('/');
@@ -42,7 +40,6 @@ function App() {
       })
       .then(()=> setIsloading(false))
       .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
-    }
   }
 
   React.useEffect(()=> {
@@ -66,7 +63,6 @@ function App() {
     signIn({password, email})
     .then(res => {
       setIsLogged(true);
-      localStorage.setItem("JWT", res.token);
       setUserEmail(email);
       history.push('/');
     })
@@ -74,7 +70,6 @@ function App() {
   }
 
   function handleSignOut() {
-    localStorage.removeItem("JWT");
     setIsLogged(false);
   }
 

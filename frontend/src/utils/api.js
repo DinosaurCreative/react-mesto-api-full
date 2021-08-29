@@ -1,3 +1,5 @@
+import { BASE_URL } from './constants';
+
 export class Api {
   constructor({address, headers}) {
     this._address = address;
@@ -101,7 +103,7 @@ export class Api {
 }
 
 const api = new Api({
-  address: 'http://api.lookaround.nomoredomains.club/',
+  address: BASE_URL,
   headers:{
     'Content-Type': 'application/json'
   }

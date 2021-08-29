@@ -5,11 +5,12 @@ export function checkServerResponse(item){
 };
 
 export function signUp({password, email}) {
-  return fetch(`${BASE_URL}/signup`, {
+  return fetch(`${BASE_URL}signup`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
+    credentials: "include",
     body: JSON.stringify({
       password,
       email
@@ -19,11 +20,12 @@ export function signUp({password, email}) {
 };
 
 export function signIn({password, email}) {
-  return fetch(`${BASE_URL}/signin`, {
+  return fetch(`${BASE_URL}signin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
+    credentials: "include",
     body: JSON.stringify({
       password,
       email
@@ -33,12 +35,12 @@ export function signIn({password, email}) {
 };
 
 export function checkToken(token) {
-  return fetch(`${BASE_URL}/users/me`, {
+  return fetch(`${BASE_URL}users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      "Authorization" : `Bearer ${token}`
-    }
+    },
+    credentials: "include"
   })
   .then(res => checkServerResponse(res))
 };
