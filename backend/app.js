@@ -20,7 +20,10 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
-app.use(cors());
+app.use(cors({
+  origin: 'http://lookaround.students.nomoredomains.club/',
+  credentials: true,
+}));
 app.use(helmet());
 
 app.use(express.json());
