@@ -18,6 +18,7 @@ export class Api {
       return fetch(`${this._address}users/me`, {
         method: 'GET',
         headers: this._headers,
+        credentials: 'include',
       })
       .then(res => this._checkServerResponse(res))
     }
@@ -26,6 +27,7 @@ export class Api {
     return fetch(`${this._address}cards`,{
       method: 'GET',
       headers: this._headers,
+      credentials: 'include',
     })
     .then(res => this._checkServerResponse(res))
   }
@@ -35,6 +37,7 @@ export class Api {
    return fetch(`${this._address}users/me`, {
       method: 'PATCH',
       headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({
         name: data.name,
         about: data.about
@@ -47,6 +50,7 @@ export class Api {
     return fetch(`${this._address}cards`, {
       method: 'POST',
       headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({
         name: data.name,
         link: data.link,
@@ -59,6 +63,7 @@ export class Api {
    return fetch(`${this._address}cards/${id}`, {
       method: 'DELETE',
       headers: this._headers,
+      credentials: 'include',
     })
     .then(res => this._checkServerResponse(res))
     .catch(err => console.log(`Ошибка: ${err}`))
@@ -68,6 +73,7 @@ export class Api {
     return fetch(`${this._address}users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
+      credentials: 'include',
       body: JSON.stringify({
         avatar: link
       })
@@ -79,6 +85,7 @@ export class Api {
     return fetch(`${this._address}cards/likes/${id}`, {
       method: 'PUT',
       headers: this._headers,
+      credentials: 'include',
     })
     .then(res => this._checkServerResponse(res))
   }
@@ -88,6 +95,7 @@ export class Api {
     return fetch(`${this._address}cards/likes/${id}`, {
       method: 'DELETE',
       headers: this._headers,
+      credentials: 'include',
     })
     .then(res => this._checkServerResponse(res))
   }
