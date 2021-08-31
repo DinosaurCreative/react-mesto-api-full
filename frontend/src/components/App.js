@@ -53,7 +53,7 @@ function App() {
   }
 
   React.useEffect(()=> {
-    handleCheckToken();
+    if (isLogged) handleCheckToken();
   },[]);
 
   function hadleSignUp({password, email}) {

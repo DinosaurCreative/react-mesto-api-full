@@ -123,7 +123,7 @@ module.exports.login = (req, res, next) => {
       res.cookie('_id', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-      }).send({ message: 'Авторизация успешна' });
+      }).send({ message: 'Авторизация успешна' }, token, NODE_ENV, JWT_SECRET);
     })
     .catch((err) => {
       if (err.message === 'invailidEmailOrPassword') {
