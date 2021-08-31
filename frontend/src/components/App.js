@@ -29,33 +29,27 @@ function App() {
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
   const history = useHistory();
-  const[isLoading, setIsloading] = React.useState(true);
   
   React.useEffect(() => {
-
+    if(isLogged){
         Promise.all([api.getProfileData(), api.getImages()])
             .then(([userInfo, cards]) => {
               setCurrentUser(userInfo);
               console.log(cards)
             })
-            .then(() => setIsloading(false))
             .catch((err) => console.log(err));
-
+    }
 }, [isLogged]);
 
 
   function handleCheckToken() {
       checkToken()
       .then(res => {
-        console.log(res)
         setUserEmail(res.data.email);
         history.push('/');
         setIsLogged(true);
       })
       .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
-      .finally(()=> {
-        setIsloading(false)
-      })
   }
 
   React.useEffect(()=> {
@@ -78,6 +72,7 @@ function App() {
   function handleSignIn({password, email}) {
     signIn({password, email})
     .then(res => {
+      console.log(res);
       setIsLogged(true);
       setUserEmail(email);
       history.push('/');
@@ -88,12 +83,6 @@ function App() {
   function handleSignOut() {
     setIsLogged(false);
   }
-
-  // React.useEffect(()=> {
-  //   api.getProfileData()
-  //   .then(userInfo => setCurrentUser(userInfo))
-  //   .catch(err => console.log(`Ошибка при получении данных профиля: ${err}`))
-  // },[]);
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
@@ -126,12 +115,6 @@ function App() {
     .then(() => closeAllPopups())
     .catch(err => console.log(`Ошибка при добавлении нового фото: ${err}`))
   }
-
-  // React.useEffect(() => {
-  //   api.getImages()
-  //   .then(imagesData =>  setCards(imagesData))
-  //   .catch(err => console.log(`Ошибка: ${err}`))
-  // }, []);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -169,11 +152,8 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
   
-  return ( isLoading 
-    ? <div className="page">
-        <div className="page__container" />
-      </div>  
-    : <div className="page">
+  return (
+     <div className="page">
         <div className="page__container">
          <CurrentUserContext.Provider value={currentUser}>
             <Header path={{register: "sign-up", login: "sign-in"}}
