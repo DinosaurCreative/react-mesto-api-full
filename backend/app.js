@@ -38,7 +38,7 @@ app.get('/crash-test', () => {
 });
 app.post('/signup', createUserValidation, createUser);
 app.post('/signin', loginValidation, login);
-app.post('/signout', signOut);
+app.delete('/signout', signOut);
 
 app.get('/crash-test', () => {
   setTimeout(() => {
