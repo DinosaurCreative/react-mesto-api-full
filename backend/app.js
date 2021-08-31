@@ -1,9 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
-const cors = require('cors');
+// const cors = require('cors');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
+const corsHandler = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -20,10 +21,13 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
-app.use(cors({
-  origin: 'https://lookaround.students.nomoredomains.club',
-  credentials: true,
-}));
+app.use(corsHandler);
+
+// app.use(cors({
+//   origin: 'https://lookaround.students.nomoredomains.club',
+//   credentials: true,
+// }));
+
 app.use(helmet());
 
 app.use(express.json());
