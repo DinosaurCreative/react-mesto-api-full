@@ -30,16 +30,32 @@ function App() {
   const [userEmail, setUserEmail] = React.useState('');
   const history = useHistory();
   const[isLoading, setIsloading] = React.useState(true);
+  
+  React.useEffect(() => {
+
+        Promise.all([api.getProfileData(), api.getImages()])
+            .then(([userInfo, cards]) => {
+              setCurrentUser(userInfo);
+              console.log(cards)
+            })
+            .then(() => setIsloading(false))
+            .catch((err) => console.log(err));
+
+}, [isLogged]);
+
 
   function handleCheckToken() {
       checkToken()
       .then(res => {
+        console.log(res)
         setUserEmail(res.data.email);
         history.push('/');
         setIsLogged(true);
       })
-      .then(()=> setIsloading(false))
       .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
+      .finally(()=> {
+        setIsloading(false)
+      })
   }
 
   React.useEffect(()=> {
@@ -73,12 +89,11 @@ function App() {
     setIsLogged(false);
   }
 
-  React.useEffect(()=> {
-    api.getProfileData()
-    .then(userInfo => setCurrentUser(userInfo))
-    .then(()=> setIsloading(false))
-    .catch(err => console.log(`Ошибка при получении данных профиля: ${err}`))
-  },[]);
+  // React.useEffect(()=> {
+  //   api.getProfileData()
+  //   .then(userInfo => setCurrentUser(userInfo))
+  //   .catch(err => console.log(`Ошибка при получении данных профиля: ${err}`))
+  // },[]);
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
@@ -112,11 +127,11 @@ function App() {
     .catch(err => console.log(`Ошибка при добавлении нового фото: ${err}`))
   }
 
-  React.useEffect(() => {
-    api.getImages()
-    .then(imagesData =>  setCards(imagesData))
-    .catch(err => console.log(`Ошибка: ${err}`))
-  }, []);
+  // React.useEffect(() => {
+  //   api.getImages()
+  //   .then(imagesData =>  setCards(imagesData))
+  //   .catch(err => console.log(`Ошибка: ${err}`))
+  // }, []);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
