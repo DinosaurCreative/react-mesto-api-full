@@ -87,9 +87,6 @@ function App() {
 
   function handleSignOut() {
     setIsLogged(false);
-    api.signOut()
-    .then(res => console.log(res.message))
-    .catch(err => console.log(err))
   }
 
   function closeAllPopups() {
@@ -117,8 +114,7 @@ function App() {
   function handleAddPlaceSubmit(newCard) {
     api.postImage(newCard)
     .then(res => {
-      cards.splice(cards.length - 1);
-      setCards([res, ...cards])
+      setCards([...cards, res.data])
     })
     .then(() => closeAllPopups())
     .catch(err => console.log(`Ошибка при добавлении нового фото: ${err}`))
@@ -126,7 +122,7 @@ function App() {
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-
+    console.log(isLiked);
     api.changeLikeCardStatus(card._id, isLiked)
     .then(newCard => {
       const updatedCards = cards.map(c => c._id === card._id ? newCard : c);
@@ -164,7 +160,7 @@ function App() {
     ? <div className="page">
         <div className="page__container" />
       </div>  
-     :<div className="page">
+    : <div className="page">
         <div className="page__container">
          <CurrentUserContext.Provider value={currentUser}>
             <Header path={{register: "sign-up", login: "sign-in"}}
