@@ -29,32 +29,37 @@ function App() {
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
   const history = useHistory();
+  const[isLoading, setIsloading] = React.useState(true);
   
+  React.useEffect(()=> {
+    handleCheckToken();
+  },[]);
+
+  function handleCheckToken() {
+      checkToken()
+      .then(res => {
+        setUserEmail(res.email);
+        history.push('/');
+        setIsLogged(true);
+      })
+      .then(()=> setIsloading(false))
+      .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
+  }
+
   React.useEffect(() => {
     if(isLogged){
         Promise.all([api.getProfileData(), api.getImages()])
             .then(([userInfo, cards]) => {
               setCurrentUser(userInfo);
-              console.log(cards)
+              setCards(cards.data);
             })
+            .then(()=> setIsloading(false))
             .catch((err) => console.log(err));
     }
 }, [isLogged]);
 
 
-  function handleCheckToken() {
-      checkToken()
-      .then(res => {
-        setUserEmail(res.data.email);
-        history.push('/');
-        setIsLogged(true);
-      })
-      .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
-  }
 
-  React.useEffect(()=> {
-    if (isLogged) handleCheckToken();
-  },[]);
 
   function hadleSignUp({password, email}) {
     signUp({password, email})
@@ -82,6 +87,9 @@ function App() {
 
   function handleSignOut() {
     setIsLogged(false);
+    api.signOut()
+    .then(res => console.log(res.message))
+    .catch(err => console.log(err))
   }
 
   function closeAllPopups() {
@@ -152,8 +160,11 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
   
-  return (
-     <div className="page">
+  return (isLoading 
+    ? <div className="page">
+        <div className="page__container" />
+      </div>  
+     :<div className="page">
         <div className="page__container">
          <CurrentUserContext.Provider value={currentUser}>
             <Header path={{register: "sign-up", login: "sign-in"}}

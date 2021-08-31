@@ -106,7 +106,14 @@ export class Api {
     }else{
       return this.increaseLike(id)
     }
-    
+  }
+  signOut() {
+    return fetch(`${this._address}signout`, {
+      method: 'DELETE',
+      headers: this._headers,
+      credentials: 'include',
+    })
+    .then(res => this._checkServerResponse(res))
   }
 }
 

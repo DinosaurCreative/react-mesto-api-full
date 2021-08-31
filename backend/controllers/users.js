@@ -135,3 +135,8 @@ module.exports.login = (req, res, next) => {
       return next(new DefaultError(err.message));
     });
 };
+
+module.exports.signOut = (req, res, next) => {
+  res.clearCookie('_id').send({ message: 'Куки удалены' });
+  next();
+};
