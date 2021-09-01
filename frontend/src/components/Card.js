@@ -20,7 +20,7 @@ function Card({card,_ ,onCardClick, onLikeClick, onTrashClick}) {
   };
 
   function checkIsLiked(card) {
-    return card._id === user._id;
+    return card === user._id;
   };
 
   return (

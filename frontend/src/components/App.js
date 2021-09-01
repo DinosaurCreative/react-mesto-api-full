@@ -58,9 +58,6 @@ function App() {
     }
 }, [isLogged]);
 
-
-
-
   function hadleSignUp({password, email}) {
     signUp({password, email})
     .then(() => {
@@ -114,18 +111,21 @@ function App() {
   function handleAddPlaceSubmit(newCard) {
     api.postImage(newCard)
     .then(res => {
-      setCards([...cards, res.data])
+      console.log(`Вариант вставки эллемента начало массива через unshift ${cards.unshift(res.data)}`);
+      console.log(`Вариант вставки эллемента начало массива через ... ${[res.data, ...cards]}`);
+      console.log(`Вариант вставки эллемента конец массива через ... ${res.data}`);
+      
+      setCards([res.data, ...cards])
     })
     .then(() => closeAllPopups())
     .catch(err => console.log(`Ошибка при добавлении нового фото: ${err}`))
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
-    console.log(isLiked);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     api.changeLikeCardStatus(card._id, isLiked)
     .then(newCard => {
-      const updatedCards = cards.map(c => c._id === card._id ? newCard : c);
+      const updatedCards = cards.map(c => c._id === card._id ? newCard.data : c);
       setCards(updatedCards);
     })
     .catch(err => console.log(`Ошибка: ${err}`))
