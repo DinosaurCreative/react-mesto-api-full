@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const { errors } = require('celebrate');
 const helmet = require('helmet');
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const corsHandler = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
@@ -21,32 +21,32 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useFindAndModify: false,
   useUnifiedTopology: true,
 });
+
 app.use(corsHandler);
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-// app.use(cookieParser());
+app.use(cookieParser());
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
+// app.get('/crash-test', () => {
+//   setTimeout(() => {
+//     throw new Error('Сервер сейчас упадёт');
+//   }, 0);
+// });
 app.post('/signup', createUserValidation, createUser);
+// app.get('/crash-test', () => {
+//   setTimeout(() => {
+//     throw new Error('Сервер сейчас упадёт');
+//   }, 0);
+// });
 app.post('/signin', loginValidation, login);
+// app.get('/crash-test', () => {
+//   setTimeout(() => {
+//     throw new Error('Сервер сейчас упадёт');
+//   }, 0);
+// });
 app.delete('/signout', signOut);
-
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
 
 app.use('/', cardRoutes);
 app.use('/', userRoutes);
