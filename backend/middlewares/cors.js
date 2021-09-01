@@ -1,10 +1,9 @@
 const allowedMethods = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 const allowedUrl = [
-  'https://lookaround.students.nomoredomains.club',
+  'https://lookaround.students.nomoredomains.club/',
   'https://api.lookaround.nomoredomains.club',
   'https://localhost:3000',
   'http://localhost:3000',
-  'https://api.lookaround.nomoredomains.club/users/me',
 ];
 
 module.exports = (req, res, next) => {
