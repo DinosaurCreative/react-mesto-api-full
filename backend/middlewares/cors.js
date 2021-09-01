@@ -1,7 +1,6 @@
 const allowedMethods = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 const allowedUrl = [
   'https://lookaround.students.nomoredomains.club',
-  'https://api.lookaround.nomoredomains.club/users/me',
   'https://api.lookaround.nomoredomains.club',
   'https://localhost:3000',
   'http://localhost:3000',
