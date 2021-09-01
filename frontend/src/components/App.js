@@ -85,9 +85,9 @@ function App() {
 
   function handleSignOut() {
     setIsLogged(false)
-    // api.signOut()
-    //   .then(() => setIsLogged(false))
-    //   .then ((err) => console.log(`Ошибка при выходе из аккаунта: ${err}`))
+    api.signOut()
+      .then(() => setIsLogged(false))
+      .then ((err) => console.log(`Ошибка при выходе из аккаунта: ${err}`))
   }
 
   function closeAllPopups() {
