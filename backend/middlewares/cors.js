@@ -4,6 +4,7 @@ const allowedUrl = [
   'https://api.lookaround.nomoredomains.club',
   'https://localhost:3000',
   'http://localhost:3000',
+  'https://api.lookaround.nomoredomains.club/users/me',
 ];
 
 module.exports = (req, res, next) => {
