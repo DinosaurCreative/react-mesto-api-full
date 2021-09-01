@@ -42,5 +42,8 @@ export function checkToken() {
     },
     credentials: "include"
   })
-  .then(res => checkServerResponse(res))
+  .then(res => {
+    console.log(res);
+    checkServerResponse(res)
+  })
 };
