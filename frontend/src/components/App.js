@@ -44,46 +44,50 @@ function App() {
       })
       .then(()=> setIsloading(false))
       .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
+      .finally(()=> setIsloading(false))
   }
 
   React.useEffect(() => {
     if(isLogged){
-        Promise.all([api.getProfileData(), api.getImages()])
-            .then(([userInfo, cards]) => {
-              setCurrentUser(userInfo);
-              setCards(cards.data);
-            })
-            .then(()=> setIsloading(false))
-            .catch((err) => console.log(err));
+      Promise.all([api.getProfileData(), api.getImages()])
+        .then(([userInfo, cards]) => {
+          setCurrentUser(userInfo);
+          setCards(cards.data);
+        })
+        .then(()=> setIsloading(false))
+        .catch((err) => console.log(err));
     }
 }, [isLogged]);
 
   function hadleSignUp({password, email}) {
     signUp({password, email})
-    .then(() => {
-      setIsRegistered(true);
-      setIsInfoTooltipPopupOpen(true);
-      history.push('sign-in');
-    })
-    .catch(err => {
-      setIsInfoTooltipPopupOpen(true);
-      console.log(`Ошибка в отправляемых данных: ${err}`);
-    })
+      .then(() => {
+        setIsRegistered(true);
+        setIsInfoTooltipPopupOpen(true);
+        history.push('sign-in');
+      })
+      .catch(err => {
+        setIsInfoTooltipPopupOpen(true);
+        console.log(`Ошибка в отправляемых данных: ${err}`);
+      })
   }
 
   function handleSignIn({password, email}) {
     signIn({password, email})
-    .then(res => {
-      console.log(res);
-      setIsLogged(true);
-      setUserEmail(email);
-      history.push('/');
-    })
-    .catch(err => console.log(`Ошибка при авторизации: ${err}`))
+      .then(res => {
+        console.log(res);
+        setIsLogged(true);
+        setUserEmail(email);
+        history.push('/');
+      })
+      .catch(err => console.log(`Ошибка при авторизации: ${err}`))
   }
 
   function handleSignOut() {
-    setIsLogged(false);
+    setIsLogged(false)
+    // api.signOut()
+    //   .then(() => setIsLogged(false))
+    //   .then ((err) => console.log(`Ошибка при выходе из аккаунта: ${err}`))
   }
 
   function closeAllPopups() {
@@ -103,22 +107,16 @@ function App() {
 
   function handleUpdateAvatar(avatarLink) {
     api.changeAvatar(avatarLink)
-    .then(res => setCurrentUser(res))
-    .then(() => closeAllPopups())
-    .catch(err => console.log(`Ошибка при обновлении аватара: ${err}`))
+      .then(res => setCurrentUser(res))
+      .then(() => closeAllPopups())
+      .catch(err => console.log(`Ошибка при обновлении аватара: ${err}`))
   }
 
   function handleAddPlaceSubmit(newCard) {
     api.postImage(newCard)
-    .then(res => {
-      console.log(`Вариант вставки эллемента начало массива через unshift ${cards.unshift(res.data)}`);
-      console.log(`Вариант вставки эллемента начало массива через ... ${[res.data, ...cards]}`);
-      console.log(`Вариант вставки эллемента конец массива через ... ${res.data}`);
-      
-      setCards([res.data, ...cards])
-    })
-    .then(() => closeAllPopups())
-    .catch(err => console.log(`Ошибка при добавлении нового фото: ${err}`))
+      .then(res => setCards([res.data, ...cards]))
+      .then(() => closeAllPopups())
+      .catch(err => console.log(`Ошибка при добавлении нового фото: ${err}`))
   }
 
   function handleCardLike(card) {

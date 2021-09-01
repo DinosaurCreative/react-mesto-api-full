@@ -107,6 +107,7 @@ export class Api {
       return this.increaseLike(id)
     }
   }
+  
   signOut() {
     return fetch(`${this._address}signout`, {
       method: 'DELETE',
