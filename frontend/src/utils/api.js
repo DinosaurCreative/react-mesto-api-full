@@ -15,7 +15,7 @@ export class Api {
   }
   
     getProfileData() {
-      return fetch(`${this._address}users/me`, {
+      return fetch(`${this._address}/users/me`, {
         method: 'GET',
         headers: this._headers,
         credentials: 'include',
@@ -24,7 +24,7 @@ export class Api {
     }
 
   getImages(){
-    return fetch(`${this._address}cards`,{
+    return fetch(`${this._address}/cards`,{
       method: 'GET',
       headers: this._headers,
       credentials: 'include',
@@ -34,7 +34,7 @@ export class Api {
 
 
   setNewProfileData(data) {
-   return fetch(`${this._address}users/me`, {
+   return fetch(`${this._address}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       credentials: 'include',
@@ -47,7 +47,7 @@ export class Api {
   }
 
   postImage(data) {
-    return fetch(`${this._address}cards`, {
+    return fetch(`${this._address}/cards`, {
       method: 'POST',
       headers: this._headers,
       credentials: 'include',
@@ -60,7 +60,7 @@ export class Api {
   }
 
   deleteImage(id) {
-   return fetch(`${this._address}cards/${id}`, {
+   return fetch(`${this._address}/cards/${id}`, {
       method: 'DELETE',
       headers: this._headers,
       credentials: 'include',
@@ -70,7 +70,7 @@ export class Api {
   }
 
   changeAvatar(link) {
-    return fetch(`${this._address}users/me/avatar`, {
+    return fetch(`${this._address}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       credentials: 'include',
@@ -82,7 +82,7 @@ export class Api {
   }
   
   increaseLike(id) {
-    return fetch(`${this._address}cards/${id}/likes`, {
+    return fetch(`${this._address}/cards/${id}/likes`, {
       method: 'PUT',
       headers: this._headers,
       credentials: 'include',
@@ -92,7 +92,7 @@ export class Api {
 
 
   reduceLike(id) {
-    return fetch(`${this._address}cards/${id}/likes`, {
+    return fetch(`${this._address}/cards/${id}/likes`, {
       method: 'DELETE',
       headers: this._headers,
       credentials: 'include',
@@ -109,7 +109,7 @@ export class Api {
   }
   
   signOut() {
-    return fetch(`${this._address}signout`, {
+    return fetch(`${this._address}/signout`, {
       method: 'DELETE',
       headers: this._headers,
       credentials: 'include',

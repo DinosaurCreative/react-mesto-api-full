@@ -1,6 +1,6 @@
 const allowedMethods = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 const allowedUrl = [
-  'https://lookaround.students.nomoredomains.club/',
+  'https://lookaround.students.nomoredomains.club',
   'https://api.lookaround.nomoredomains.club',
   'https://localhost:3000',
   'http://localhost:3000',
@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
   const requestHeaders = req.headers['access-control-request-headers'];
   const { origin } = req.headers;
   console.log('before');
-  console.log(req.header);
+  console.log(req.headers);
   console.log(req);
   console.log('after');
   if (allowedUrl.includes(origin)) {
