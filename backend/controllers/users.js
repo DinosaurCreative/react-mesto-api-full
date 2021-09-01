@@ -137,6 +137,6 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.signOut = (req, res, next) => {
-  res.clearCookie('_id').send({ message: 'Куки удалены' });
+  res.clearCookie('jwt').send({ message: 'Куки удалены' });
   next();
 };

@@ -38,11 +38,11 @@ function App() {
   function handleCheckToken() {
       checkToken()
       .then(res => {
+        console.log(res);
         setUserEmail(res.email);
         history.push('/');
         setIsLogged(true);
       })
-      .then(()=> setIsloading(false))
       .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
       .finally(()=> setIsloading(false))
   }
