@@ -42,7 +42,7 @@ module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user)
     .orFail(new Error('UnknownId'))
     .then((user) => {
-      console.log(user);
+      console.log(`То что отправляю пользователю при тесте  токена ${user}`);
       res.send(user);
     })
     .catch((err) => {

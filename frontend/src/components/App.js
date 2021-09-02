@@ -42,6 +42,7 @@ function App() {
     .catch(err => {
       console.log(`Ошибка при проверке токена: ${err}`)
       history.push('/sign-in');
+      setIsLogged(false);
     })
     .finally(()=> {
       setIsloading(false);
