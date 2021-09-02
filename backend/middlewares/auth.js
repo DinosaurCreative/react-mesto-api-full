@@ -9,7 +9,6 @@ function extractBearerToken(header) {
 }
 
 module.exports = (req, res, next) => {
-  console.log(`Вот что приходит в запросе на проверку токена: ${req}`);
   const authorization = req.headers.cookie;
   if (!authorization || !authorization.startsWith('_id=')) {
     next(new ForbiddenError('Авторизуйтесь'));
