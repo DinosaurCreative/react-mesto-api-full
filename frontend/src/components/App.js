@@ -43,9 +43,9 @@ function App() {
       history.push('/sign-in');
       setIsLogged(false);
     })
-    .finally(()=> {
-      setIsloading(false);
-    })
+    // .finally(()=> {
+    //   setIsloading(false);
+    // })
   }
   
   React.useEffect(() => {
@@ -55,17 +55,16 @@ function App() {
           setCurrentUser(userInfo);
           setCards(cards.data);
         })
-        .then(()=> setIsloading(false))
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
+        .finally(() => setIsloading(false))
     } else {
       setIsloading(false);
     }
 }, [isLogged]);
-  
-  React.useEffect(()=> {
-    handleCheckToken();
-  },[]);
 
+React.useEffect(()=> {
+  handleCheckToken();
+},[]);
 
   function hadleSignUp({password, email}) {
     signUp({password, email})

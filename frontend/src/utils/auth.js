@@ -1,7 +1,7 @@
 import { BASE_URL } from './constants';
 
 function checkServerResponse(item){
-  return item.ok ? item.json() : new Error(item.status)
+  return item.ok ? item.json() : Promise.reject(item.status)
 };
 
 export function signUp({password, email}) {
