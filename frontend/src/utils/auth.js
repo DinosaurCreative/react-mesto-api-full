@@ -1,7 +1,7 @@
 import { BASE_URL } from './constants';
 
 function checkServerResponse(item){
-  return item.ok ? item.json() : Promise.reject(item.status)
+  return item.ok ? item.json() : new Error(item.status)
 };
 
 export function signUp({password, email}) {
@@ -42,8 +42,5 @@ export function checkToken() {
     },
     credentials: "include"
   })
-  .then(res => {
-    console.log(res, 'ответ на чек токен');
-    checkServerResponse(res)
-  })
+  .then(res => checkServerResponse(res))
 };

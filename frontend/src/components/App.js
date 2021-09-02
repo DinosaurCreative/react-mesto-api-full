@@ -31,10 +31,9 @@ function App() {
   const history = useHistory();
   const[isLoading, setIsloading] = React.useState(true);
   
-  const handleCheckToken = React.useCallback(() => {
+  function handleCheckToken() {
     checkToken()
     .then(res => {
-      console.log( `ответ в then checktoken() : ${res}`);
       setUserEmail(res.email);
       history.push('/');
       setIsLogged(true);
@@ -47,12 +46,8 @@ function App() {
     .finally(()=> {
       setIsloading(false);
     })
-  },[history])
+  }
   
-  React.useEffect(()=> {
-    handleCheckToken();
-  },[handleCheckToken]);
-
   React.useEffect(() => {
     if(isLogged){
       Promise.all([api.getProfileData(), api.getImages()])
@@ -62,8 +57,15 @@ function App() {
         })
         .then(()=> setIsloading(false))
         .catch((err) => console.log(err));
+    } else {
+      setIsloading(false);
     }
 }, [isLogged]);
+  
+  React.useEffect(()=> {
+    handleCheckToken();
+  },[]);
+
 
   function hadleSignUp({password, email}) {
     signUp({password, email})
