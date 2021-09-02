@@ -41,7 +41,10 @@ module.exports.getUser = (req, res, next) => {
 module.exports.getCurrentUser = (req, res, next) => {
   User.findById(req.user)
     .orFail(new Error('UnknownId'))
-    .then((user) => res.send(user))
+    .then((user) => {
+      console.log(user);
+      res.send(user);
+    })
     .catch((err) => {
       if (err.message === 'UnknownId') {
         return next(new NotFoundError(usersIdMissing));

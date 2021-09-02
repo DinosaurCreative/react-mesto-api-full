@@ -37,9 +37,13 @@ function App() {
       setUserEmail(res.email);
       history.push('/');
       setIsLogged(true);
+      setIsloading(false)
     })
     .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
-    .finally(()=> setIsloading(false))
+    .finally(()=> {
+      history.push('/sign-in');
+      setIsloading(false);
+    })
   },[history])
   
   React.useEffect(()=> {
