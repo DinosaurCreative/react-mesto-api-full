@@ -34,15 +34,16 @@ function App() {
   const handleCheckToken = React.useCallback(() => {
     checkToken()
     .then(res => {
-      console.log(res, 'ответ в then');
+      console.log( `ответ в then checktoken() : ${res}`);
       setUserEmail(res.email);
       history.push('/');
       setIsLogged(true);
-      setIsloading(false)
     })
-    .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
-    .finally(()=> {
+    .catch(err => {
+      console.log(`Ошибка при проверке токена: ${err}`)
       history.push('/sign-in');
+    })
+    .finally(()=> {
       setIsloading(false);
     })
   },[history])
