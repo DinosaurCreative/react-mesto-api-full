@@ -30,17 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
 
 app.post('/signup', createUserValidation, createUser);
-// app.get('/crash-test', () => {
-//   setTimeout(() => {
-//     throw new Error('Сервер сейчас упадёт');
-//   }, 0);
-// });
 app.post('/signin', loginValidation, login);
-// app.get('/crash-test', () => {
-//   setTimeout(() => {
-//     throw new Error('Сервер сейчас упадёт');
-//   }, 0);
-// });
 app.delete('/signout', signOut);
 
 app.use('/', cardRoutes);
