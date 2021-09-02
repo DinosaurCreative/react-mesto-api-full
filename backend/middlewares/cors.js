@@ -7,7 +7,7 @@ const allowedUrl = [
 ];
 
 module.exports = (req, res, next) => {
-  const { method } = req;
+  const { method } = req.headers['Access-Control-Request-Method:'];
   const requestHeaders = req.headers['access-control-request-headers'];
   const { origin } = req.headers;
   console.log('before');
