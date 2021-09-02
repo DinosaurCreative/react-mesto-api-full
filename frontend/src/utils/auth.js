@@ -1,6 +1,6 @@
 import { BASE_URL } from './constants';
 
-export function checkServerResponse(item){
+function checkServerResponse(item){
   return item.ok ? item.json() : Promise.reject(item.status)
 };
 
@@ -43,7 +43,7 @@ export function checkToken() {
     credentials: "include"
   })
   .then(res => {
-    console.log(res);
+    console.log(res, 'ответ на чек токен');
     checkServerResponse(res)
   })
 };

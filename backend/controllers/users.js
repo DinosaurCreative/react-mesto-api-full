@@ -39,6 +39,7 @@ module.exports.getUser = (req, res, next) => {
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
+  console.log(`даные запроса в контроллерегет карент юзер ${req}`);
   User.findById(req.user)
     .orFail(new Error('UnknownId'))
     .then((user) => res.send(user))
