@@ -12,6 +12,7 @@
   },
   "keywords": [],
   "author": "German Gimaev",
+  "projectKey": "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",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^7.32.0",

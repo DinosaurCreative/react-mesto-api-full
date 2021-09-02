@@ -120,7 +120,7 @@ module.exports.login = (req, res, next) => {
   User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret', { expiresIn: '7d' });
-      res.cookie('jwt', token, {
+      res.cookie('_id', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
         sameSite: true,
@@ -137,6 +137,6 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.signOut = (req, res, next) => {
-  res.clearCookie('jwt').send({ message: 'Куки удалены' });
+  res.clearCookie('_id').send({ message: 'Куки удалены' });
   next();
 };
