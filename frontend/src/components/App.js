@@ -31,21 +31,20 @@ function App() {
   const history = useHistory();
   const[isLoading, setIsloading] = React.useState(true);
   
+  const handleCheckToken = React.useCallback(() => {
+    checkToken()
+    .then(res => {
+      setUserEmail(res.email);
+      history.push('/');
+      setIsLogged(true);
+    })
+    .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
+    .finally(()=> setIsloading(false))
+  },[history])
+  
   React.useEffect(()=> {
     handleCheckToken();
-  },[]);
-
-  function handleCheckToken() {
-      checkToken()
-      .then(res => {
-        console.log(res);
-        setUserEmail(res.email);
-        history.push('/');
-        setIsLogged(true);
-      })
-      .catch(err => console.log(`Ошибка при проверке токена: ${err}`))
-      .finally(()=> setIsloading(false))
-  }
+  },[handleCheckToken]);
 
   React.useEffect(() => {
     if(isLogged){
@@ -85,9 +84,9 @@ function App() {
 
   function handleSignOut() {
     setIsLogged(false)
-    // api.signOut()
-    //   .then(() => setIsLogged(false))
-    //   .then ((err) => console.log(`Ошибка при выходе из аккаунта: ${err}`))
+    api.signOut()
+      .then(() => setIsLogged(false))
+      .then ((err) => console.log(`Ошибка при выходе из аккаунта: ${err}`))
   }
 
   function closeAllPopups() {
