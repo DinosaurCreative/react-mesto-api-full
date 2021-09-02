@@ -7,13 +7,10 @@ const allowedUrl = [
 ];
 
 module.exports = (req, res, next) => {
-  const { method } = req.headers['Access-Control-Request-Method:'];
+  const { method } = req;
   const requestHeaders = req.headers['access-control-request-headers'];
   const { origin } = req.headers;
-  console.log('before');
-  console.log(req.headers);
-  console.log(req);
-  console.log('after');
+
   if (allowedUrl.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Credentials', 'true');
