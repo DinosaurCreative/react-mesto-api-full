@@ -50,14 +50,17 @@ function App() {
   },[]);
   
   React.useEffect(() => {
-    if(isLogged){
+    if (isLogged){
       Promise.all([api.getProfileData(), api.getImages()])
       .then(([userInfo, cards]) => {
         setCurrentUser(userInfo);
         setCards(cards.data);
       })
-      .catch((err) => console.log(err))
-      .finally(() => setIsloading(false))
+      .then(() => setIsloading(false))
+      .catch((err) => {
+        console.log(err);
+        setIsloading(false);
+      })
     }
   }, [isLogged]);
   
