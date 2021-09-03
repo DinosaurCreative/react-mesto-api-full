@@ -42,6 +42,8 @@ function App() {
       console.log(`Ошибка при проверке токена: ${err}`)
       history.push('/sign-in');
       setIsLogged(false);
+      setIsloading(false);
+
     })
   }
   
@@ -63,12 +65,6 @@ function App() {
       })
     } 
   }, [isLogged]);
-  
-  React.useEffect(() => {
-    if (cards.length !== 0) {
-      setIsloading(false);
-    }
-  }, [cards]);
   
   function hadleSignUp({password, email}) {
     signUp({password, email})
