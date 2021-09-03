@@ -45,6 +45,9 @@ function App() {
     })
   }
   
+  React.useEffect(()=> {
+    handleCheckToken();
+  },[]);
   
   React.useEffect(() => {
     if(isLogged){
@@ -114,7 +117,9 @@ function App() {
   
   function handleAddPlaceSubmit(newCard) {
     api.postImage(newCard)
-    .then(res => setCards([res.data, ...cards]))
+    .then(res => {
+      setCards([res.data, ...cards])
+    })
     .then(() => closeAllPopups())
     .catch(err => console.log(`Ошибка при добавлении нового фото: ${err}`))
   }
@@ -154,10 +159,6 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
  
-  React.useEffect(()=> {
-    handleCheckToken();
-  },[]);
-  
   return (isLoading 
     ? <div className="page">
         <div className="page__container" />
