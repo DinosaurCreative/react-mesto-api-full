@@ -24,13 +24,13 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({isOpen: false});
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', _id: '', avatar: ''});
   const [cards, setCards] = React.useState([]);
+  const [isLoading, setIsloading] = React.useState(true);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [isLogged, setIsLogged] = React.useState(false);
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
   const history = useHistory();
-  const[isLoading, setIsloading] = React.useState(true);
-  
+
   function handleCheckToken() {
     checkToken()
     .then(res => {
@@ -43,60 +43,53 @@ function App() {
       history.push('/sign-in');
       setIsLogged(false);
     })
-    // .finally(()=> {
-    //   setIsloading(false);
-    // })
   }
+  
   
   React.useEffect(() => {
     if(isLogged){
       Promise.all([api.getProfileData(), api.getImages()])
-        .then(([userInfo, cards]) => {
-          setCurrentUser(userInfo);
-          setCards(cards.data);
-        })
-        .catch((err) => console.log(err))
-        .finally(() => setIsloading(false))
-    } else {
-      setIsloading(false);
+      .then(([userInfo, cards]) => {
+        setCurrentUser(userInfo);
+        setCards(cards.data);
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsloading(false))
     }
-}, [isLogged]);
-
-React.useEffect(()=> {
-  handleCheckToken();
-},[]);
-
+  }, [isLogged]);
+  
+  
   function hadleSignUp({password, email}) {
     signUp({password, email})
-      .then(() => {
-        setIsRegistered(true);
-        setIsInfoTooltipPopupOpen(true);
-        history.push('sign-in');
-      })
-      .catch(err => {
-        setIsInfoTooltipPopupOpen(true);
-        console.log(`Ошибка в отправляемых данных: ${err}`);
-      })
+    .then(() => {
+      setIsRegistered(true);
+      setIsInfoTooltipPopupOpen(true);
+      history.push('sign-in');
+    })
+    .catch(err => {
+      setIsInfoTooltipPopupOpen(true);
+      console.log(`Ошибка в отправляемых данных: ${err}`);
+    })
   }
-
+  
   function handleSignIn({password, email}) {
     signIn({password, email})
-      .then(res => {
-        console.log(res);
-        setIsLogged(true);
-        setUserEmail(email);
-        history.push('/');
-      })
-      .catch(err => console.log(`Ошибка при авторизации: ${err}`))
+    .then(res => {
+      console.log(res);
+      setIsLogged(true);
+      setUserEmail(email);
+      history.push('/');
+    })
+    .catch(err => console.log(`Ошибка при авторизации: ${err}`))
   }
-
+  
   function handleSignOut() {
     setIsLogged(false)
     api.signOut()
-      .then(() => setIsLogged(false))
-      .then ((err) => console.log(`Ошибка при выходе из аккаунта: ${err}`))
+    .then(() => setIsLogged(false))
+    .then ((err) => console.log(`Ошибка при выходе из аккаунта: ${err}`))
   }
-
+  
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -104,28 +97,28 @@ React.useEffect(()=> {
     setSelectedCard({ isOpen: false });
     setIsInfoTooltipPopupOpen(false);
   };
-
+  
   function handleUpdateUser(userInfo) {
     api.setNewProfileData(userInfo)
     .then(res => setCurrentUser(res))
     .then(() => closeAllPopups())
     .catch(err => console.log(`Ошибка при обновлении данных профиля: ${err}`))
   };
-
+  
   function handleUpdateAvatar(avatarLink) {
     api.changeAvatar(avatarLink)
-      .then(res => setCurrentUser(res))
-      .then(() => closeAllPopups())
-      .catch(err => console.log(`Ошибка при обновлении аватара: ${err}`))
+    .then(res => setCurrentUser(res))
+    .then(() => closeAllPopups())
+    .catch(err => console.log(`Ошибка при обновлении аватара: ${err}`))
   }
-
+  
   function handleAddPlaceSubmit(newCard) {
     api.postImage(newCard)
-      .then(res => setCards([res.data, ...cards]))
-      .then(() => closeAllPopups())
-      .catch(err => console.log(`Ошибка при добавлении нового фото: ${err}`))
+    .then(res => setCards([res.data, ...cards]))
+    .then(() => closeAllPopups())
+    .catch(err => console.log(`Ошибка при добавлении нового фото: ${err}`))
   }
-
+  
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i === currentUser._id);
     api.changeLikeCardStatus(card._id, isLiked)
@@ -135,7 +128,7 @@ React.useEffect(()=> {
     })
     .catch(err => console.log(`Ошибка: ${err}`))
   };
-
+  
   function handleCardDelete(card) {
     api.deleteImage(card._id)
     .then(() => {
@@ -144,7 +137,7 @@ React.useEffect(()=> {
     })
     .catch(err => console.log(`Ошибка при удалении фото: ${err}`))
   };
-
+  
   function handleCardClick(data) {
     setSelectedCard(data);
   };
@@ -156,10 +149,14 @@ React.useEffect(()=> {
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
   };
-
+  
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
+ 
+  React.useEffect(()=> {
+    handleCheckToken();
+  },[]);
   
   return (isLoading 
     ? <div className="page">
