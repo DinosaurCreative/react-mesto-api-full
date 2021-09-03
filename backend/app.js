@@ -4,8 +4,8 @@ require('dotenv').config();
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-// const cors = require('cors');
-const corsHandler = require('./middlewares/cors');
+const cors = require('cors');
+// const corsHandler = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -23,18 +23,27 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useUnifiedTopology: true,
 });
 
-// app.use(cors({
-//   origin: 'https://lookaround.students.nomoredomains.club',
-//   credentials: true,
-// }));
-app.use(corsHandler());
+app.use(cors({
+  origin: 'https://lookaround.students.nomoredomains.club',
+  credentials: true,
+}));
+// app.use(corsHandler());
 app.use(cookieParser());
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
-
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 app.post('/signup', createUserValidation, createUser);
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 app.post('/signin', loginValidation, login);
 app.delete('/signout', signOut);
 

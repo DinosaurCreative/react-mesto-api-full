@@ -9,10 +9,10 @@ const allowedUrl = [
 module.exports = (req, res, next) => {
   const { method } = req;
   const requestHeaders = req.headers['access-control-request-headers'];
-  const { origin } = req.headers;
+  const { Origin } = req.headers;
 
-  if (allowedUrl.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
+  if (allowedUrl.includes(Origin)) {
+    res.header('Access-Control-Allow-Origin', Origin);
     res.header('Access-Control-Allow-Credentials', 'true');
   }
 
