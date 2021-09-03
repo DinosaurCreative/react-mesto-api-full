@@ -61,9 +61,14 @@ function App() {
         console.log(err);
         setIsloading(false);
       })
-    }
+    } 
   }, [isLogged]);
   
+  React.useEffect(() => {
+    if (cards.length !== 0) {
+      setIsloading(false);
+    }
+  }, [cards]);
   
   function hadleSignUp({password, email}) {
     signUp({password, email})
@@ -160,7 +165,7 @@ function App() {
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
- 
+
   return (isLoading 
     ? <div className="page">
         <div className="page__container" />
