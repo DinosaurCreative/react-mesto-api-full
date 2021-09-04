@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const UnauthorizedError = require('../errors/UnauthorizedError');
-const ForbiddenError = require('../errors/ForbiddenError');
 
 const { JWT_SECRET, NODE_ENV } = process.env;
 
@@ -11,7 +10,7 @@ function extractBearerToken(header) {
 module.exports = (req, res, next) => {
   const authorization = req.headers.cookie;
   if (!authorization || !authorization.startsWith('_id=')) {
-    next(new ForbiddenError('Авторизуйтесь'));
+    next(new UnauthorizedError('Авторизуйтесь'));
     return;
   }
   const token = extractBearerToken(authorization);

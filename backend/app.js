@@ -15,6 +15,7 @@ const cardRoutes = require('./routes/cards');
 const userRoutes = require('./routes/users');
 const { createUser, login, signOut } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const NotFoundError = require('./errors/NotFoundError');
 
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
@@ -53,8 +54,8 @@ app.use('/', userRoutes);
 
 app.use(errorLogger);
 
-app.use((req, res) => {
-  res.status(404).send({ message: 'Не смотри, я не накрашена!' });
+app.use('*', () => {
+  throw new NotFoundError('Не смотри, я не накрашена!');
 });
 
 app.use(errors());
