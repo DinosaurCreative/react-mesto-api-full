@@ -39,6 +39,7 @@ module.exports.getUser = (req, res, next) => {
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
+  console.log(req.user);
   User.findById(req.user)
     .orFail(new Error('UnknownId'))
     .then((user) => {
@@ -125,7 +126,8 @@ module.exports.login = (req, res, next) => {
       res.cookie('_id', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        sameSite: true,
+        sameSite: 'None',
+        secure: true,
       }).send({ message: 'Авторизация успешна' });
     })
     .catch((err) => {

@@ -20,6 +20,7 @@ module.exports = (req, res, next) => {
   } catch (err) {
     next(new UnauthorizedError('Ошибка авторизации'));
   }
+  console.log('this is pyload:', payload);
   req.user = payload;
   next();
 };

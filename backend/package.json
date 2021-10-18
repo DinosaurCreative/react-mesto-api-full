@@ -7,7 +7,7 @@
     "lint": "npx eslint .",
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "vm": "ssh gimalaev@178.154.202.177",
+    "vm": "ssh gimalaev@62.84.118.246",
     "nginx": "sudo nano /etc/nginx/sites-available/default"
   },
   "keywords": [],

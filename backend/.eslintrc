@@ -6,8 +6,14 @@
       {
         "allow": ["_id"]
       }
-      ],
-      "no-console": "off",
-      "func-names": "off"
+    ],
+    "import/no-unresolved": [
+      2,
+      {
+        "amd": false,
+        "commonjs": false
+      }],
+    "no-console": "off",
+    "func-names": "off"
   }
 }
