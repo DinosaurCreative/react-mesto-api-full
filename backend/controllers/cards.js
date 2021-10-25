@@ -39,8 +39,10 @@ module.exports.createCard = (req, res, next) => {
 module.exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.id)
     .orFail(new Error('UnknownId'))
-    .then((pic) => {
-      if (String(pic.owner) !== req.user._id) {
+    // .then((pic) => {
+    //   if (String(pic.owner) !== req.user._id) {
+    .then(() => {
+      if (true) {
         next(new ForbiddenError(ownerRigthsErr));
         return;
       }

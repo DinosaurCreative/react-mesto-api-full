@@ -30,6 +30,7 @@ function App() {
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [userEmail, setUserEmail] = React.useState('');
   const history = useHistory();
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
 
   function handleCheckToken() {
     checkToken()
@@ -48,8 +49,11 @@ function App() {
   }
   
   React.useEffect(()=> {
-    handleCheckToken();
-  },[]);
+    if(isLoggedIn) {
+      console.log(isRegistered);
+      handleCheckToken();
+    }
+  }, []);
   
   React.useEffect(() => {
     if (isLogged){
@@ -82,7 +86,7 @@ function App() {
   function handleSignIn({password, email}) {
     signIn({password, email})
     .then(res => {
-      console.log(res);
+      localStorage.setItem('isLoggedIn', true);
       setIsLogged(true);
       setUserEmail(email);
       history.push('/');
@@ -92,7 +96,10 @@ function App() {
   
   function handleSignOut() {
     api.signOut()
-    .then(() => setIsLogged(false))
+    .then(() => {
+      setIsLogged(false);
+      localStorage.removeItem('isLoggedIn');
+    })
     .then ((err) => console.log(`Ошибка при выходе из аккаунта: ${err}`))
   }
   

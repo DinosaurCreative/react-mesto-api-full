@@ -18,8 +18,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* gimalaev@178.154.202.177:/home/gimalaev/react-mesto-api-full/frontend/build",
-    "vm": "ssh gimalaev@178.154.202.177"
+    "deploy": "npm run build && scp -r ./build/* gimalaev@62.84.118.246:/home/gimalaev/react-mesto-api-full/frontend/build",
+    "vm": "ssh gimalaev@62.84.118.246"
   },
   "eslintConfig": {
     "extends": [
