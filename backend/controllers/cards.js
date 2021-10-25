@@ -42,7 +42,7 @@ module.exports.deleteCard = (req, res, next) => {
     // .then((pic) => {
     //   if (String(pic.owner) !== req.user._id) {
     .then(() => {
-      if (true) {
+      if (false) {
         next(new ForbiddenError(ownerRigthsErr));
         return;
       }
