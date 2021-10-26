@@ -15,7 +15,7 @@ import { Route, Switch, Redirect, useHistory} from 'react-router-dom';
 import PopupWithForm from './PopupWithForm';
 import InfoTooltip from './InfoTooltip';
 import ProtectedRoute from './ProtectedRoute';
-import {signUp, signIn, checkToken} from '../utils/auth';
+import { signUp, signIn, checkToken } from '../utils/auth';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -43,9 +43,10 @@ function App() {
       console.log(`Ошибка при проверке токена: ${err}`)
       history.push('/sign-in');
       setIsLogged(false);
-      setIsloading(false);
-
+      // setIsloading(false);
     })
+    .finally(()=> setIsloading(false))
+
   }
   
   React.useEffect(()=> {
@@ -62,10 +63,9 @@ function App() {
         setCurrentUser(userInfo);
         setCards(cards.data.reverse());
       })
-      .then(() => setIsloading(false))
+      // .then(() => setIsloading(false))
       .catch((err) => {
         console.log(err);
-        setIsloading(false);
       })
     } 
   }, [isLogged]);
