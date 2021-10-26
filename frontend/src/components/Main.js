@@ -25,7 +25,7 @@ function Main (props) {
       <section className="grid">
       <span className={ props.cards.length > 0  ? '': "grid__loader"}/>
         <ul className="grid__list">{ 
-          props.cards.reverse().map(card => {
+          props.cards.map(card => {
             return (<Card card = {card}
                          key = {card._id}
                          onCardClick = {props.onCardClick}

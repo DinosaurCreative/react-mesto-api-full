@@ -60,7 +60,7 @@ function App() {
       Promise.all([api.getProfileData(), api.getImages()])
       .then(([userInfo, cards]) => {
         setCurrentUser(userInfo);
-        setCards(cards.data);
+        setCards(cards.data.reverse());
       })
       .then(() => setIsloading(false))
       .catch((err) => {
