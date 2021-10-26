@@ -26,7 +26,7 @@ function Card({card,_ ,onCardClick, onLikeClick, onTrashClick}) {
   return (
     <li className="grid__item" >
       <img className="grid__image" alt={card.name}  src={card.link } onClick={handleClick}/>
-      <button className={`grid__delete-btn ${card.owner !== user._id ? "grid__delete-btn_type_visible" : ''}`} onClick={handleTrashClick}></button>
+      <button className={`grid__delete-btn ${card.owner === user._id ? "grid__delete-btn_type_visible" : ''}`} onClick={handleTrashClick}></button>
       <div className="grid__city-box">
         <h2 className="grid__city-name">{card.name}</h2>
         <div className="grid__like-container">
