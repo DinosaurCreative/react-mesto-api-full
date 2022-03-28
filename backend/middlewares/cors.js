@@ -1,7 +1,9 @@
 const allowedMethods = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 const allowedUrl = [
-  'https://lookaround.students.nomoredomains.club',
-  'https://api.lookaround.nomoredomains.club',
+  'https://look-around-two.vercel.app',
+  'https://look-around-two.vercel.app/',
+  'http://look-around-two.vercel.app/',
+  'http://look-around-two.vercel.app',
   'https://localhost:3000',
   'http://localhost:3000',
 ];
