@@ -4,7 +4,7 @@ function checkServerResponse(item){
   if(item.ok){
    return item.json()
   } else {
-    console.log(item.json())
+    console.log(item.json());
     return Promise.reject(item.status)
   }
 };
