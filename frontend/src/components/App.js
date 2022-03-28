@@ -54,6 +54,7 @@ function App() {
       console.log(isRegistered);
       handleCheckToken();
     }
+    
   }, []);
   
   React.useEffect(() => {
@@ -169,11 +170,11 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
 
-  return (isLoading 
+  return (/* isLoading 
     ? <div className="page">
         <div className="page__container" />
       </div>  
-    : <div className="page">
+    : */ <div className="page">
         <div className="page__container">
          <CurrentUserContext.Provider value={currentUser}>
             <Header path={{register: "sign-up", login: "sign-in"}}
