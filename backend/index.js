@@ -4,7 +4,7 @@ require('dotenv').config();
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
-const cors = require('./middlewares/cors');
+// const cors = require('./middlewares/cors');
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -24,7 +24,7 @@ mongoose.connect(dataBaseAddress, {
   useUnifiedTopology: true,
 }).then(() => console.log('connected')).catch((err) => console.log(`Ошибка подключения: ${err}`));
 
-app.use(cors);
+// app.use(cors);
 app.use(cookieParser());
 app.use(helmet());
 app.use(express.json());
