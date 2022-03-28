@@ -6,6 +6,10 @@ const allowedUrl = [
   'http://look-around-two.vercel.app',
   'https://localhost:3000',
   'http://localhost:3000',
+  'https://look-around-two.vercel.app',
+  'http://look-around-two.vercel.app',
+  'https://look-around-two.vercel.app/',
+  'http://look-around-two.vercel.app/',
 ];
 
 module.exports = (req, res, next) => {
