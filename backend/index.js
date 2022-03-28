@@ -15,13 +15,14 @@ const userRoutes = require('./routes/users');
 const { createUser, login, signOut } = require('./controllers/users');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/NotFoundError');
+const { dataBaseAddress } = require('./utils/config');
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect(dataBaseAddress, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
-});
+}).then(() => console.log('connected')).catch((err) => console.log(`Ошибка подключения: ${err}`));
 
 app.use(cors);
 app.use(cookieParser());
