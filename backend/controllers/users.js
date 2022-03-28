@@ -39,7 +39,6 @@ module.exports.getUser = (req, res, next) => {
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
-  console.log(req.user);
   User.findById(req.user)
     .orFail(new Error('UnknownId'))
     .then((user) => {

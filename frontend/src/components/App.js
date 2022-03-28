@@ -24,7 +24,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({isOpen: false});
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', _id: '', avatar: ''});
   const [cards, setCards] = React.useState([]);
-  const [isLoading, setIsloading] = React.useState(true);
+  const [isLoading, setIsloading] = React.useState(false);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [isLogged, setIsLogged] = React.useState(false);
   const [isRegistered, setIsRegistered] = React.useState(false);
@@ -43,17 +43,17 @@ function App() {
       console.log(`Ошибка при проверке токена: ${err}`)
       history.push('/sign-in');
       setIsLogged(false);
-      // setIsloading(false);
     })
     .finally(()=> setIsloading(false))
 
   }
   
   React.useEffect(()=> {
-    if(isLoggedIn) {
-      console.log(isRegistered);
+    // if(isLoggedIn) {
+    //   console.log(isRegistered);
+    //   console.log('hello');
       handleCheckToken();
-    }
+    // }
     
   }, []);
   
@@ -64,10 +64,10 @@ function App() {
         setCurrentUser(userInfo);
         setCards(cards.data.reverse());
       })
-      // .then(() => setIsloading(false))
       .catch((err) => {
         console.log(err);
       })
+      .finally(()=> setIsloading(false))
     } 
   }, [isLogged]);
   
@@ -170,11 +170,11 @@ function App() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
 
-  return (/* isLoading 
+  return (isLoading 
     ? <div className="page">
         <div className="page__container" />
       </div>  
-    : */ <div className="page">
+    : <div className="page">
         <div className="page__container">
          <CurrentUserContext.Provider value={currentUser}>
             <Header path={{register: "sign-up", login: "sign-in"}}
