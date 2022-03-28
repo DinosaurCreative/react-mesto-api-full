@@ -46,6 +46,4 @@ app.use('*', () => {
 app.use(errors());
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`Подключено к порту ${PORT}.`);
-});
+app.listen(PORT, () => console.log(`Подключено к порту ${PORT}.`));
