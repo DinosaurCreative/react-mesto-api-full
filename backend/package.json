@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "lint": "npx eslint .",
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "vm": "ssh gimalaev@62.84.118.246",
     "nginx": "sudo nano /etc/nginx/sites-available/default"
   },
