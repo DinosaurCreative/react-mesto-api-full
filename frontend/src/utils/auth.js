@@ -1,13 +1,6 @@
 import { BASE_URL } from './constants';
 
-function checkServerResponse(item){
-  if(item.ok){
-   return item.json()
-  } else {
-    console.log(item.json());
-    return Promise.reject(item.status)
-  }
-};
+const checkServerResponse = item => item.ok ? item.json() : Promise.reject(item.status);
 
 export function signUp({password, email}) {
   return fetch(`${BASE_URL}/signup`, {

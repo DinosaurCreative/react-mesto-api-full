@@ -7,11 +7,7 @@ export class Api {
   }
   
   _checkServerResponse(item) {
-    if(item.ok){
-      return item.json();
-    }else {
-      return Promise.reject(item.status)
-    }
+    return item.ok ? item.json() : Promise.reject(item.status)
   }
   
     getProfileData() {
@@ -66,7 +62,7 @@ export class Api {
       credentials: 'include',
     })
     .then(res => this._checkServerResponse(res))
-    .catch(err => console.log(`Ошибка: ${err}`))
+    // .catch(err => console.log(`Ошибка: ${err}`))
   }
 
   changeAvatar(link) {
@@ -101,11 +97,7 @@ export class Api {
   }
 
   changeLikeCardStatus(id, isLiked) {
-    if(isLiked) {
-      return this.reduceLike(id)
-    }else{
-      return this.increaseLike(id)
-    }
+    return isLiked ? this.reduceLike(id) : this.increaseLike(id);
   }
   
   signOut() {
