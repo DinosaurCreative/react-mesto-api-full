@@ -50,8 +50,6 @@ function App() {
   
   React.useEffect(()=> {
     if(isLoggedIn) {
-      console.log(isRegistered);
-      console.log('hello');
       handleCheckToken();
     }
     
