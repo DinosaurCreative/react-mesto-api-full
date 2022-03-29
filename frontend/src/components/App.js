@@ -49,11 +49,11 @@ function App() {
   }
   
   React.useEffect(()=> {
-    // if(isLoggedIn) {
-    //   console.log(isRegistered);
-    //   console.log('hello');
+    if(isLoggedIn) {
+      console.log(isRegistered);
+      console.log('hello');
       handleCheckToken();
-    // }
+    }
     
   }, []);
   
