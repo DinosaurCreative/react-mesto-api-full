@@ -24,7 +24,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({isOpen: false});
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '', _id: '', avatar: ''});
   const [cards, setCards] = React.useState([]);
-  const [isLoading, setIsloading] = React.useState(false);
+  const [isLoading, setIsloading] = React.useState(true);
   const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = React.useState(false);
   const [isLogged, setIsLogged] = React.useState(false);
   const [isRegistered, setIsRegistered] = React.useState(false);
