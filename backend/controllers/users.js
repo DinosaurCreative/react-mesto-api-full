@@ -7,8 +7,8 @@ const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const ConflictError = require('../errors/ConflictError');
 
-const { NODE_ENV } = process.env;
-// const { JWT_SECRET, NODE_ENV } = process.env;
+// const { NODE_ENV } = process.env;
+const { JWT_SECRET, NODE_ENV } = process.env;
 const {
   usersIdMissing,
   badValue,
@@ -122,7 +122,7 @@ module.exports.login = (req, res, next) => {
 
   User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? 'JWT_SECRET' : 'super-strong-secret', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'super-strong-secret', { expiresIn: '7d' });
       res.cookie('_id', token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
