@@ -7,7 +7,8 @@ const NotFoundError = require('../errors/NotFoundError');
 const UnauthorizedError = require('../errors/UnauthorizedError');
 const ConflictError = require('../errors/ConflictError');
 
-const { JWT_SECRET, NODE_ENV } = process.env;
+const { NODE_ENV } = process.env;
+// const { JWT_SECRET, NODE_ENV } = process.env;
 const {
   usersIdMissing,
   badValue,

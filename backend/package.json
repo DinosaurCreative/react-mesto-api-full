@@ -2,14 +2,11 @@
   "name": "express-mesto",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "engines": {
-    "node":"14.x"
-  },
+  "main": "app.js",
   "scripts": {
     "lint": "npx eslint .",
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "vm": "ssh gimalaev@62.84.118.246",
     "nginx": "sudo nano /etc/nginx/sites-available/default"
   },
