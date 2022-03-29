@@ -9,10 +9,10 @@ function extractBearerToken(header) {
 
 module.exports = (req, res, next) => {
   const authorization = req.headers.cookie;
-  if (!authorization || !authorization.startsWith('_id=')) {
-    next(new UnauthorizedError('Авторизуйтесь'));
-    return;
-  }
+  // if (!authorization || !authorization.startsWith('_id=')) {
+  //   next(new UnauthorizedError('Авторизуйтесь'));
+  //   return;
+  // }
   const token = extractBearerToken(authorization);
   let payload;
   try {
